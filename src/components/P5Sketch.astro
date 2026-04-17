@@ -1,0 +1,58 @@
+---
+interface Props {
+  src: string;
+  height?: number;
+  caption?: string;
+}
+
+const { src, height = 400, caption } = Astro.props;
+const id = `p5-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<figure class="p5-figure">
+  <div class="p5-container" id={id} style={`height: ${height}px`}></div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<script define:vars={{ src, id }}>
+  async function loadSketch() {
+    if (!window.p5) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    const container = document.getElementById(id);
+    if (!container) return;
+
+    const module = await import(/* @vite-ignore */ src);
+    const sketchFn = module.default;
+    new p5(sketchFn, container);
+  }
+
+  loadSketch();
+</script>
+
+<style>
+  .p5-figure {
+    margin: 1.5em 0;
+  }
+  .p5-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+    background: var(--bg-subtle);
+  }
+  figcaption {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 0.5em;
+  }
+</style>
