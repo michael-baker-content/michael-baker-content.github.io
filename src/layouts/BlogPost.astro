@@ -35,7 +35,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         max-width: calc(100% - 2em);
         margin: auto;
         padding: 1em;
-        color: rgb(var(--gray-dark));
+        color: var(--text);
       }
       .title {
         margin-bottom: 1em;
@@ -48,7 +48,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
       }
       .date {
         margin-bottom: 0.5em;
-        color: rgb(var(--gray));
+        color: var(--text-muted);
       }
       .last-updated-on {
         font-style: italic;
@@ -61,29 +61,40 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         margin: 0.75em 0;
       }
       .tag {
-        background-color: rgb(var(--gray-light));
-        color: rgb(var(--gray-dark));
+        background-color: var(--bg-subtle);
+        color: var(--text-muted);
         padding: 0.25em 0.75em;
-        border-radius: 999px;
+        border-radius: 6px;
         font-size: 0.85em;
         text-decoration: none;
+        border: 0.5px solid var(--border);
+        transition:
+          background-color 0.15s,
+          color 0.15s;
       }
       .tag:hover {
-        background-color: rgb(var(--accent));
-        color: white;
+        background-color: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
       }
       .repo-button {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         margin: 0.75em 0;
         padding: 0.5em 1.25em;
-        background-color: rgb(var(--accent));
-        color: white;
+        background-color: var(--accent);
+        color: var(--bg);
         border-radius: 6px;
         text-decoration: none;
         font-size: 0.95em;
+        font-weight: 500;
+        transition: background-color 0.15s;
       }
       .repo-button:hover {
-        background-color: rgb(var(--accent-dark));
+        background-color: var(--bg);
+        color: var(--accent);
+        border: 1px solid var(--accent);
       }
     </style>
   </head>
