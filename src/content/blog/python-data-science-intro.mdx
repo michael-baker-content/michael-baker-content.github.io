@@ -5,6 +5,9 @@ pubDate: "2025-02-20"
 tags: ["python", "numpy", "matplotlib", "seaborn", "data-science"]
 ---
 
+import { Fragment } from 'react';
+import MafsChart from '../../components/MafsChart.jsx';
+
 ## Getting Started with NumPy
 
 NumPy's array operations were the first thing that made Python feel genuinely powerful to me compared to general purpose languages. The ability to express operations over entire arrays without explicit loops is both elegant and fast.
@@ -31,5 +34,15 @@ The most valuable learning came from working with real datasets rather than toy 
 One thing I appreciated was seeing the linear algebra I had been studying show up directly in data science workflows. For example, computing a correlation matrix is essentially a normalized dot product:
 
 $$
-r_{xy} = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}
+r_\{xy\} = \frac\{\sum(x_i - \bar\{x\})(y_i - \bar\{y\})\}\{\sqrt\{\sum(x_i - \bar\{x\})^2 \sum(y_i - \bar\{y\})^2\}\}
 $$
+
+Here's the normal distribution curve, one of the most important functions in statistics:
+
+<MafsChart
+	client:load
+	type="normalDistribution"
+	xRange={[-5, 5]}
+	yRange={[-0.2, 0.5]}
+	caption="Normal distribution — the foundation of many statistical methods"
+/>
