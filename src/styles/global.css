@@ -150,12 +150,31 @@ code {
 pre {
   padding: 1.5em;
   border-radius: 8px;
-  background-color: var(--code-bg);
   border: 0.5px solid var(--border);
+  background-color: var(--code-bg) !important;
 }
 
 pre > code {
-  all: unset;
+  font-size: 0.9em;
+  font-family: var(--font-mono, monospace);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: unset;
+}
+
+pre > code span {
+  color: var(--shiki-light) !important;
+}
+
+[data-theme="dark"] pre > code span {
+  color: var(--shiki-dark) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) pre > code span {
+    color: var(--shiki-dark) !important;
+  }
 }
 
 blockquote {

@@ -57,19 +57,22 @@ import HeaderLink from "./HeaderLink.astro";
 </header>
 
 <script is:inline>
-  const theme = (() => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-    return "light";
-  })();
+  function initTheme() {
+    const theme = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return "light";
+    })();
 
-  document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
 
-  window.onload = () => {
     const toggle = document.getElementById("theme-toggle");
     const sunIcon = document.getElementById("icon-sun");
     const moonIcon = document.getElementById("icon-moon");
@@ -92,7 +95,10 @@ import HeaderLink from "./HeaderLink.astro";
       const current = document.documentElement.getAttribute("data-theme");
       applyTheme(current === "dark" ? "light" : "dark");
     });
-  };
+  }
+
+  initTheme();
+  document.addEventListener("astro:after-swap", initTheme);
 </script>
 
 <style>

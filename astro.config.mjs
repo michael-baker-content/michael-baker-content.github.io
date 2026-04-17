@@ -11,9 +11,16 @@ export default defineConfig({
 	site: 'https://michael-baker-content.github.io',
 	integrations: [mdx(), sitemap()],
 	markdown: {
-		remarkPlugins: [remarkMath],
-		rehypePlugins: [rehypeKatex],
-	},
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+    shikiConfig: {
+    themes: {
+        light: 'min-light',
+        dark: 'github-dark',
+    },
+    defaultColor: false,
+},
+},
 	fonts: [
 		{
 			provider: fontProviders.local(),
