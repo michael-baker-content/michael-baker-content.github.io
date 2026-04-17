@@ -105,6 +105,7 @@ import HeaderLink from "./HeaderLink.astro";
   h2 {
     margin: 0;
     font-size: 1em;
+    white-space: nowrap;
   }
   h2 a,
   h2 a.active {
@@ -129,6 +130,11 @@ import HeaderLink from "./HeaderLink.astro";
   }
   nav a:hover {
     color: var(--text);
+  }
+  .internal-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
   }
   .right-controls {
     display: flex;
@@ -161,11 +167,27 @@ import HeaderLink from "./HeaderLink.astro";
     border-color: var(--accent);
   }
   @media (max-width: 720px) {
-    .internal-links {
-      display: none;
-    }
     header {
       border-bottom: 0.5px solid var(--border);
+    }
+    .github-link {
+      display: none;
+    }
+    nav a {
+      padding: 1em 0.35em;
+      font-size: 0.85em;
+    }
+    h2 {
+      font-size: 0.9em;
+    }
+  }
+  @media (max-width: 400px) {
+    nav a {
+      padding: 1em 0.25em;
+      font-size: 0.78em;
+    }
+    h2 {
+      font-size: 0.8em;
     }
   }
 </style>
