@@ -7,8 +7,13 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
-const posts = (await getCollection("blog"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+const allPosts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const featuredPost = allPosts.find((p) => p.data.featured);
+const recentPosts = allPosts
+  .filter((p) => p.id !== featuredPost?.id)
   .slice(0, 3);
 ---
 
@@ -29,11 +34,34 @@ const posts = (await getCollection("blog"))
         <a href="/blog" class="browse-btn">Browse all posts</a>
       </section>
 
+      {
+        featuredPost && (
+          <section class="featured">
+            <h2>Featured</h2>
+            <div class="featured-card">
+              <div class="post-meta">
+                <FormattedDate date={featuredPost.data.pubDate} />
+                {featuredPost.data.tags &&
+                  featuredPost.data.tags.length > 0 && (
+                    <span class="tag-preview">{featuredPost.data.tags[0]}</span>
+                  )}
+              </div>
+              <h3 class="post-title">
+                <a href={`/blog/${featuredPost.id}/`}>
+                  {featuredPost.data.title}
+                </a>
+              </h3>
+              <p class="post-desc">{featuredPost.data.description}</p>
+            </div>
+          </section>
+        )
+      }
+
       <section class="recent">
         <h2>Recent posts</h2>
         <ul class="post-list">
           {
-            posts.map((post) => (
+            recentPosts.map((post) => (
               <li class="post-card">
                 <div class="post-meta">
                   <FormattedDate date={post.data.pubDate} />
@@ -154,5 +182,29 @@ const posts = (await getCollection("blog"))
   }
   .all-posts-link:hover {
     color: var(--accent-dark);
+  }
+  .featured h2 {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5em;
+  }
+  .featured-card {
+    border: 0.5px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.25em 1.5em;
+    margin-bottom: 3em;
+    background: var(--bg-surface);
+  }
+  .featured-card .post-title a {
+    font-size: 1.2em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .featured-card .post-title a:hover {
+    color: var(--accent);
   }
 </style>
