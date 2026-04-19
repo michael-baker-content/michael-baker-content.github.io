@@ -1,0 +1,53 @@
+---
+title: 'Live Coding Music with Strudel'
+description: 'Exploring Strudel, a browser-based live coding environment for music patterns inspired by TidalCycles.'
+pubDate: '2025-04-01'
+tags: ['javascript', 'music', 'creative-coding', 'strudel', 'art']
+---
+
+import StrudelEmbed from '../../components/StrudelEmbed.astro';
+
+## What is Strudel?
+
+Strudel is a browser-based live coding environment for musical patterns, inspired by TidalCycles. It lets you write code that generates music in real time — patterns of notes, rhythms, and effects described as expressions rather than traditional notation.
+
+## A basic pattern
+
+Here's a simple rhythmic pattern using Strudel's mini-notation. Hit play to hear it:
+
+<StrudelEmbed
+	code={`sound("bd sd bd sd")
+  .bank("RolandTR808")`}
+	height={300}
+	caption="A basic drum pattern using Roland TR-808 samples"
+/>
+
+## Mini-notation
+
+Strudel uses a concise mini-notation for describing patterns. Square brackets create subdivisions, angle brackets alternate between values, and asterisks repeat patterns:
+
+<StrudelEmbed
+	code={`sound("bd*2 [sd cp] bd [sd*2 cp]")
+  .bank("RolandTR808")
+  .room(0.5)`}
+	height={300}
+	caption="More complex rhythm with subdivisions and reverb"
+/>
+
+## Melodic patterns
+
+Strudel isn't just for drums — you can describe melodic patterns using note names and scales:
+
+<StrudelEmbed
+	code={`note("c3 eb3 g3 bb3")
+  .sound("sawtooth")
+  .cutoff(800)
+  .resonance(10)
+  .slow(2)`}
+	height={300}
+	caption="A minor seventh arpeggio on a sawtooth wave"
+/>
+
+## Why this is interesting
+
+What excites me about Strudel is how it makes music composition feel like programming — patterns are first-class values you can transform, combine, and sequence using familiar functional programming concepts. The connection to p5.js for visual work is natural: both are about describing generative processes in code.

@@ -1,0 +1,46 @@
+---
+interface Props {
+  code: string;
+  height?: number;
+  caption?: string;
+}
+
+const { code, height = 300, caption } = Astro.props;
+const encoded = encodeURIComponent(code);
+const src = `https://strudel.cc/embed/?code=${encoded}`;
+---
+
+<figure class="strudel-figure">
+  <div class="strudel-container" style={`height: ${height}px`}>
+    <iframe
+      src={src}
+      width="100%"
+      height="100%"
+      frameborder="0"
+      allow="autoplay"
+      loading="lazy"></iframe>
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .strudel-figure {
+    margin: 1.5em 0;
+  }
+  .strudel-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+  }
+  .strudel-container iframe {
+    display: block;
+    border: none;
+  }
+  figcaption {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 0.5em;
+  }
+</style>
