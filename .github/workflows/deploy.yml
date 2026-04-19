@@ -29,6 +29,8 @@ jobs:
         run: npm ci
       - name: Build Astro
         run: npm run build
+        env:
+          PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

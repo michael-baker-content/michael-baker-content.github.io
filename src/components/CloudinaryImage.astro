@@ -1,0 +1,48 @@
+---
+interface Props {
+  publicId: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+}
+
+const { publicId, alt, width = 800, height, caption } = Astro.props;
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload`;
+const transforms = `w_${width},f_auto,q_auto${height ? `,h_${height},c_fill` : ""}`;
+const src = `${baseUrl}/${transforms}/${publicId}`;
+const src2x = `${baseUrl}/w_${width * 2},f_auto,q_auto${height ? `,h_${height * 2},c_fill` : ""}/${publicId}`;
+---
+
+<figure class="cloudinary-figure">
+  <img
+    src={src}
+    srcset={`${src} 1x, ${src2x} 2x`}
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .cloudinary-figure {
+    margin: 1.5em 0;
+  }
+  .cloudinary-figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 0.5px solid var(--border);
+  }
+  figcaption {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 0.5em;
+  }
+</style>

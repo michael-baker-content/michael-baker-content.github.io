@@ -6,6 +6,7 @@ tags: ['javascript', 'p5js', 'creative-coding', 'animation', 'art']
 ---
 
 import P5Sketch from '../../components/P5Sketch.astro';
+import CloudinaryImage from '../../components/CloudinaryImage.astro';
 
 ## Why creative coding
 
@@ -35,6 +36,13 @@ function draw() {
 ```
 
 ## Adding interactivity
+
+<CloudinaryImage
+	publicId="Balatro_ohmbzb"
+	alt="Test image from Cloudinary"
+	width={800}
+	caption="Image served via Cloudinary CDN"
+/>
 
 One of p5.js's strengths is how easily you can tie visuals to mouse or keyboard input. Making sketches respond to the viewer changes them from animations into experiences.
 
