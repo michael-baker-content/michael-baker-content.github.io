@@ -5,9 +5,17 @@ interface Props {
   width?: number;
   height?: number;
   caption?: string;
+  bare?: boolean;
 }
 
-const { publicId, alt, width = 800, height, caption } = Astro.props;
+const {
+  publicId,
+  alt,
+  width = 800,
+  height,
+  caption,
+  bare = false,
+} = Astro.props;
 const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload`;
@@ -16,18 +24,33 @@ const src = `${baseUrl}/${transforms}/${publicId}`;
 const src2x = `${baseUrl}/w_${width * 2},f_auto,q_auto${height ? `,h_${height * 2},c_fill` : ""}/${publicId}`;
 ---
 
-<figure class="cloudinary-figure">
-  <img
-    src={src}
-    srcset={`${src} 1x, ${src2x} 2x`}
-    alt={alt}
-    width={width}
-    height={height}
-    loading="lazy"
-    decoding="async"
-  />
-  {caption && <figcaption>{caption}</figcaption>}
-</figure>
+{
+  bare ? (
+    <img
+      src={src}
+      srcset={`${src} 1x, ${src2x} 2x`}
+      alt={alt}
+      width={width}
+      height={height}
+      loading="lazy"
+      decoding="async"
+      style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0;border:none;"
+    />
+  ) : (
+    <figure class="cloudinary-figure">
+      <img
+        src={src}
+        srcset={`${src} 1x, ${src2x} 2x`}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+      />
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  )
+}
 
 <style>
   .cloudinary-figure {

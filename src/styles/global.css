@@ -12,6 +12,8 @@
   --code-bg: #e2ddd6;
   --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.06);
   --hero-bg: #d8e8c0;
+  --projects-bg: #c4d9a0;
+  --posts-bg: #b8d4a0;
 }
 
 [data-theme="dark"] {
@@ -27,6 +29,8 @@
   --code-bg: #1e1e1e;
   --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
   --hero-bg: #1a2e0f;
+  --projects-bg: #2a4a1a;
+  --posts-bg: #1e3810;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,6 +47,8 @@
     --code-bg: #1e1e1e;
     --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
     --hero-bg: #1a2e0f;
+    --projects-bg: #2a4a1a;
+    --posts-bg: #1e3810;
   }
 }
 

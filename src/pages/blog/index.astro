@@ -99,6 +99,12 @@ const posts = (await getCollection("blog")).sort(
 </script>
 
 <style>
+  body {
+    background: var(--posts-bg); /* or --projects-bg */
+  }
+  main {
+    padding-bottom: 2em;
+  }
   .search-row {
     display: flex;
     align-items: center;

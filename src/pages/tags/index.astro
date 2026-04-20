@@ -94,6 +94,12 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
 </script>
 
 <style>
+  body {
+    background: var(--posts-bg); /* or --projects-bg */
+  }
+  main {
+    padding-bottom: 2em;
+  }
   .search-row {
     display: flex;
     align-items: center;
