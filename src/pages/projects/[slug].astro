@@ -1,0 +1,345 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import CloudinaryImage from "../../components/CloudinaryImage.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
+import { SITE_TITLE } from "../../consts";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const allPosts = await getCollection("blog");
+const relatedPosts = allPosts.filter((post) =>
+  project.blogPosts?.includes(post.id),
+);
+
+const statusLabel = {
+  active: "Active",
+  complete: "Complete",
+  learning: "Learning",
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`${project.name} — ${SITE_TITLE}`}
+      description={project.description}
+    />
+    <ClientRouter />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <a href="/projects" class="back-link">← All projects</a>
+
+      {
+        project.image && (
+          <div class="hero-image">
+            <CloudinaryImage
+              publicId={project.image}
+              alt={project.name}
+              width={800}
+              bare={true}
+            />
+          </div>
+        )
+      }
+
+      <div class="project-header">
+        <div class="project-title-row">
+          <h1>{project.name}</h1>
+          <span class={`status-badge status-${project.status}`}>
+            {statusLabel[project.status]}
+          </span>
+        </div>
+        <div class="project-meta">
+          {
+            project.type && (
+              <span class="meta-item">{project.type.replace("-", " ")}</span>
+            )
+          }
+          {
+            project.startDate && (
+              <span class="meta-item">Started {project.startDate}</span>
+            )
+          }
+          {
+            project.learningFocus && (
+              <span class="meta-item">Focus: {project.learningFocus}</span>
+            )
+          }
+        </div>
+        <div class="project-tags">
+          {
+            project.tags.map((tag) => (
+              <a href={`/tags/${tag}`} class="tag">
+                {tag}
+              </a>
+            ))
+          }
+        </div>
+        <div class="project-links">
+          <a
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="repo-btn"
+          >
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              ></path>
+            </svg>
+            View Repository
+          </a>
+          {
+            project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="live-btn"
+              >
+                ↗ Live site
+              </a>
+            )
+          }
+        </div>
+      </div>
+
+      <hr />
+
+      {
+        project.overview && (
+          <div class="overview">
+            {project.overview.split("\n\n").map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        relatedPosts.length > 0 && (
+          <div class="related-posts">
+            <h2>Related posts</h2>
+            <ul class="post-list">
+              {relatedPosts.map((post) => (
+                <li class="post-card">
+                  <div class="post-meta">
+                    <FormattedDate date={post.data.pubDate} />
+                  </div>
+                  <h3 class="post-title">
+                    <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                  </h3>
+                  <p class="post-desc">{post.data.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  body {
+    background: var(--projects-bg);
+  }
+  main {
+    padding-bottom: 3em;
+  }
+  .back-link {
+    display: inline-block;
+    font-size: 0.85em;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 1.5em;
+  }
+  .back-link:hover {
+    color: var(--accent);
+  }
+  .hero-image {
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 1.5em;
+    border: 0.5px solid var(--border);
+  }
+  .hero-image :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .project-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    margin-bottom: 1.5em;
+  }
+  .project-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    flex-wrap: wrap;
+  }
+  h1 {
+    margin: 0;
+    font-size: 2em;
+  }
+  .status-badge {
+    font-size: 0.7em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .status-active {
+    background: rgba(163, 230, 53, 0.15);
+    color: var(--accent);
+    border: 0.5px solid var(--accent);
+  }
+  .status-complete {
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+    border: 0.5px solid var(--border);
+  }
+  .status-learning {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 0.5px solid rgba(59, 130, 246, 0.3);
+  }
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    font-size: 0.8em;
+    color: var(--text-muted);
+  }
+  .meta-item {
+    text-transform: capitalize;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+  }
+  .tag {
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    border: 0.5px solid var(--border);
+    text-decoration: none;
+  }
+  .tag:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .project-links {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .repo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.9em;
+    color: var(--bg);
+    background: var(--accent);
+    text-decoration: none;
+    border: 1px solid transparent;
+    padding: 0.4em 1em;
+    border-radius: 6px;
+    font-weight: 500;
+    transition:
+      background 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+  .repo-btn:hover {
+    background: var(--bg);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .live-btn {
+    font-size: 0.9em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .live-btn:hover {
+    color: var(--accent-dark);
+  }
+  hr {
+    margin: 1.5em 0;
+  }
+  .overview {
+    margin-bottom: 3em;
+  }
+  .overview p {
+    font-size: 1em;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 1.25em;
+  }
+  .related-posts h2 {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1em;
+  }
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .post-card {
+    border-top: 0.5px solid var(--border);
+    padding: 1.25em 0;
+  }
+  .post-meta {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-bottom: 0.4em;
+  }
+  .post-title {
+    margin: 0 0 0.3em;
+    line-height: 1.3;
+  }
+  .post-title a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1em;
+  }
+  .post-title a:hover {
+    color: var(--accent);
+  }
+  .post-desc {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>
