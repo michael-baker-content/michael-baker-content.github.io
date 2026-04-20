@@ -1,6 +1,6 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import { getCollection } from "astro:content";
+import { ClientRouter } from "astro:transitions";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
@@ -21,25 +21,41 @@ const posts = (await getCollection("blog")).sort(
   <body>
     <Header />
     <main>
-      <h1 class="page-title">All posts</h1>
-      <ul class="post-list">
+      <div class="search-row">
+        <h1 class="page-title">All posts</h1>
+        <input
+          type="search"
+          id="search"
+          placeholder="Search posts..."
+          autocomplete="off"
+        />
+      </div>
+      <p id="no-results" style="display:none" class="no-results">
+        No posts match your search.
+      </p>
+      <ul class="post-list" id="post-list">
         {
           posts.map((post) => (
-            <li>
-              <a href={`/blog/${post.id}/`}>
-                <div class="post-meta">
-                  <FormattedDate date={post.data.pubDate} />
-                  {post.data.tags && post.data.tags.length > 0 && (
-                    <div class="tags">
-                      {post.data.tags.map((tag) => (
-                        <span class="tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <h2 class="post-title">{post.data.title}</h2>
-                <p class="post-desc">{post.data.description}</p>
-              </a>
+            <li
+              class="post-card"
+              data-title={post.data.title.toLowerCase()}
+              data-desc={post.data.description.toLowerCase()}
+              data-tags={(post.data.tags ?? []).join(" ").toLowerCase()}
+            >
+              <div class="post-meta">
+                <FormattedDate date={post.data.pubDate} />
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="tags">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <h2 class="post-title">
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              </h2>
+              <p class="post-desc">{post.data.description}</p>
             </li>
           ))
         }
@@ -49,32 +65,82 @@ const posts = (await getCollection("blog")).sort(
   </body>
 </html>
 
+<script>
+  function initSearch() {
+    const input = document.getElementById("search") as HTMLInputElement;
+    const list = document.getElementById("post-list");
+    const noResults = document.getElementById("no-results");
+    if (!input || !list || !noResults) return;
+
+    input.addEventListener("input", () => {
+      const query = input.value.toLowerCase().trim();
+      const cards = list.querySelectorAll<HTMLElement>(".post-card");
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const title = card.dataset.title ?? "";
+        const desc = card.dataset.desc ?? "";
+        const tags = card.dataset.tags ?? "";
+        const matches =
+          !query ||
+          title.includes(query) ||
+          desc.includes(query) ||
+          tags.includes(query);
+        card.style.display = matches ? "" : "none";
+        if (matches) visible++;
+      });
+
+      noResults.style.display = visible === 0 ? "block" : "none";
+    });
+  }
+
+  initSearch();
+  document.addEventListener("astro:after-swap", initSearch);
+</script>
+
 <style>
+  .search-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 1.5em;
+    flex-wrap: wrap;
+  }
   .page-title {
-    font-size: 1.2em;
+    font-size: 0.85em;
     color: var(--text-muted);
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-bottom: 1.5em;
+    margin: 0;
+  }
+  #search {
+    font-size: 0.9em;
+    padding: 0.4em 0.75em;
+    border-radius: 6px;
+    border: 0.5px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text);
+    width: 220px;
+    outline: none;
+  }
+  #search:focus {
+    border-color: var(--accent);
+  }
+  .no-results {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    padding: 1em 0;
   }
   .post-list {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  .post-list li {
+  .post-card {
     border-top: 0.5px solid var(--border);
-  }
-
-  .post-list a {
-    display: block;
     padding: 1.25em 0;
-    text-decoration: none;
-    color: var(--text);
-  }
-  .post-list a:hover .post-title {
-    color: var(--accent);
   }
   .post-meta {
     display: flex;
@@ -93,16 +159,22 @@ const posts = (await getCollection("blog")).sort(
   .tag {
     background: var(--bg-subtle);
     padding: 2px 8px;
-    border-radius: 999px;
+    border-radius: 6px;
     font-size: 0.9em;
     color: var(--text-muted);
   }
   .post-title {
-    font-size: 1.2em;
     margin: 0 0 0.3em;
-    color: var(--text);
     line-height: 1.3;
+  }
+  .post-title a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.2em;
     font-weight: 500;
+  }
+  .post-title a:hover {
+    color: var(--accent);
   }
   .post-desc {
     font-size: 0.85em;

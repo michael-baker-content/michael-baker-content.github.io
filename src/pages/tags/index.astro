@@ -1,6 +1,6 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import { getCollection } from "astro:content";
+import { ClientRouter } from "astro:transitions";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
@@ -35,11 +35,22 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
   <body>
     <Header />
     <main>
-      <h1 class="page-title">Tags</h1>
-      <ul class="tag-list">
+      <div class="search-row">
+        <h1 class="page-title">Tags</h1>
+        <input
+          type="search"
+          id="tag-search"
+          placeholder="Filter tags..."
+          autocomplete="off"
+        />
+      </div>
+      <p id="no-results" style="display:none" class="no-results">
+        No tags match your search.
+      </p>
+      <ul class="tag-list" id="tag-list">
         {
           tags.map(([tag, count]) => (
-            <li>
+            <li data-tag={tag.toLowerCase()}>
               <a href={`/tags/${tag}`} class="tag-item">
                 <span class="tag-name">{tag}</span>
                 <span class="tag-count">
@@ -55,14 +66,67 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
   </body>
 </html>
 
+<script>
+  function initTagSearch() {
+    const input = document.getElementById("tag-search") as HTMLInputElement;
+    const list = document.getElementById("tag-list");
+    const noResults = document.getElementById("no-results");
+    if (!input || !list || !noResults) return;
+
+    input.addEventListener("input", () => {
+      const query = input.value.toLowerCase().trim();
+      const items = list.querySelectorAll<HTMLElement>("li");
+      let visible = 0;
+
+      items.forEach((item) => {
+        const tag = item.dataset.tag ?? "";
+        const matches = !query || tag.includes(query);
+        item.style.display = matches ? "" : "none";
+        if (matches) visible++;
+      });
+
+      noResults.style.display = visible === 0 ? "block" : "none";
+    });
+  }
+
+  initTagSearch();
+  document.addEventListener("astro:after-swap", initTagSearch);
+</script>
+
 <style>
+  .search-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 1.5em;
+    flex-wrap: wrap;
+  }
   .page-title {
     font-size: 0.85em;
     color: var(--text-muted);
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-bottom: 1.5em;
+    margin: 0;
+  }
+  #tag-search {
+    font-size: 0.9em;
+    padding: 0.4em 0.75em;
+    border-radius: 6px;
+    border: 0.5px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text);
+    width: 220px;
+    outline: none;
+  }
+  #tag-search:focus {
+    border-color: var(--accent);
+  }
+  .no-results {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    padding: 1em 0;
   }
   .tag-list {
     list-style: none;
