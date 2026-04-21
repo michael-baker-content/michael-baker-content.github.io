@@ -161,6 +161,7 @@ const recentPosts = allPosts
     color: var(--text-muted);
     margin-bottom: 1.5em;
   }
+
   .browse-btn {
     display: inline-block;
     background: var(--accent);
@@ -170,10 +171,18 @@ const recentPosts = allPosts
     text-decoration: none;
     font-size: 0.9em;
     font-weight: 500;
+    border: 1px solid transparent;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
   }
   .browse-btn:hover {
-    background: var(--accent-dark);
-    color: var(--bg);
+    background: var(--bg);
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
   }
 
   .post-list {
@@ -242,6 +251,7 @@ const recentPosts = allPosts
     letter-spacing: 0.08em;
     margin-bottom: 1.5em;
   }
+
   .featured-card {
     border: 0.5px solid var(--border);
     border-left: 3px solid var(--accent);
@@ -249,15 +259,35 @@ const recentPosts = allPosts
     padding: 1.25em 1.5em;
     margin-bottom: 3em;
     background: var(--bg-surface);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+    cursor: pointer;
   }
+  .featured-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow);
+    border-color: var(--accent);
+    border-left-color: var(--accent);
+  }
+
   .featured-card .post-title a {
-    font-size: 1em;
     color: var(--text);
     text-decoration: none;
+    font-size: 1em;
+    transition: color 0.2s ease;
+  }
+  .featured-card:hover .post-title a {
+    color: var(--accent);
   }
   .featured-card .post-title a:hover {
     color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
   }
+
   .projects-section {
     background: var(--projects-bg);
     padding: 2em 1em;

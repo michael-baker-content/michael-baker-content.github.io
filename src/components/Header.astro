@@ -6,7 +6,8 @@ import HeaderLink from "./HeaderLink.astro";
 <header>
   <nav>
     <h2><a href="/">{SITE_TITLE}</a></h2>
-    <div class="internal-links">
+    <div class="internal-links" id="nav-links">
+      <div class="nav-indicator" id="nav-indicator"></div>
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
       <HeaderLink href="/tags">Tags</HeaderLink>
@@ -83,8 +84,63 @@ import HeaderLink from "./HeaderLink.astro";
     });
   }
 
+  function initNavIndicator() {
+    const nav = document.getElementById("nav-links");
+    const indicator = document.getElementById("nav-indicator");
+    if (!nav || !indicator) return;
+
+    const links = nav.querySelectorAll("a");
+
+    function moveIndicator(el, animate) {
+      const navRect = nav.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const left = elRect.left - navRect.left;
+      const width = elRect.width;
+
+      if (!animate) {
+        indicator.style.transition = "none";
+      } else {
+        indicator.style.transition =
+          "left 0.25s ease, width 0.25s ease, opacity 0.2s ease";
+      }
+
+      indicator.style.left = left + "px";
+      indicator.style.width = width + "px";
+      indicator.style.opacity = "1";
+    }
+
+    function resetToActive() {
+      const active = nav.querySelector("a.active");
+      if (active) {
+        moveIndicator(active, true);
+      } else {
+        indicator.style.opacity = "0";
+      }
+    }
+
+    const active = nav.querySelector("a.active");
+    if (active) {
+      moveIndicator(active, false);
+      requestAnimationFrame(() => {
+        indicator.style.transition =
+          "left 0.25s ease, width 0.25s ease, opacity 0.2s ease";
+      });
+    } else {
+      indicator.style.opacity = "0";
+    }
+
+    links.forEach((link) => {
+      link.addEventListener("mouseenter", () => moveIndicator(link, true));
+      link.addEventListener("mouseleave", resetToActive);
+    });
+  }
+
   initTheme();
-  document.addEventListener("astro:after-swap", initTheme);
+  initNavIndicator();
+  document.addEventListener("astro:after-swap", () => {
+    initTheme();
+    initNavIndicator();
+  });
 </script>
 
 <style>
@@ -122,19 +178,32 @@ import HeaderLink from "./HeaderLink.astro";
     display: flex;
     align-items: center;
     gap: 0;
+    position: relative;
   }
   nav a {
     padding: 1em 0.5em;
     color: var(--text-muted);
     border-bottom: 3px solid transparent;
     text-decoration: none;
+    transition: color 0.2s ease;
+    position: relative;
+    z-index: 1;
   }
   nav a.active {
     color: var(--text);
-    border-bottom-color: var(--accent);
   }
   nav a:hover {
     color: var(--text);
+  }
+  .nav-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px 2px 0 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
   }
   #theme-toggle {
     background: none;
@@ -164,7 +233,6 @@ import HeaderLink from "./HeaderLink.astro";
       font-size: 0.9em;
     }
   }
-
   @media (max-width: 520px) {
     nav {
       padding: 0 0.75em;
@@ -175,18 +243,6 @@ import HeaderLink from "./HeaderLink.astro";
     }
     h2 {
       font-size: 0.85em;
-    }
-  }
-  @media (max-width: 400px) {
-    nav a {
-      padding: 1em 0.25em;
-      font-size: 0.75em;
-    }
-    h2 {
-      font-size: 0.8em;
-    }
-    .internal-links a[href="/"] {
-      display: none;
     }
   }
 </style>
