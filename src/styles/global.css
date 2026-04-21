@@ -15,6 +15,7 @@
   --projects-bg: #c4d9a0;
   --posts-bg: #b8d4a0;
   --font-syne: "Syne", sans-serif;
+  --bg-gradient: linear-gradient(to right, #cce0b8, #f5f3ef, #f5f3ef, #cce0b8);
 }
 
 [data-theme="dark"] {
@@ -32,6 +33,7 @@
   --hero-bg: #1a2e0f;
   --projects-bg: #2a4a1a;
   --posts-bg: #1e3810;
+  --bg-gradient: linear-gradient(to right, #162b0a, #0f0f0f, #0f0f0f, #162b0a);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,6 +52,13 @@
     --hero-bg: #1a2e0f;
     --projects-bg: #2a4a1a;
     --posts-bg: #1e3810;
+    --bg-gradient: linear-gradient(
+      to right,
+      #162b0a,
+      #0f0f0f,
+      #0f0f0f,
+      #162b0a
+    );
   }
 }
 
@@ -67,6 +76,7 @@ body {
   padding: 0;
   text-align: left;
   background-color: var(--bg);
+  background: var(--bg-gradient);
   word-wrap: break-word;
   overflow-wrap: break-word;
   color: var(--text);
