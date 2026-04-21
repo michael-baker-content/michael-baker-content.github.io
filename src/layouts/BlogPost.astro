@@ -21,6 +21,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
       main {
         background: var(--posts-bg);
         padding-bottom: 3em;
+        box-sizing: border-box;
       }
       .hero-image {
         width: 100%;
@@ -38,12 +39,15 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         padding: 1em 2em;
         color: var(--text);
         box-sizing: border-box;
+        word-break: break-word;
       }
       .title {
         margin-bottom: 1em;
         padding: 1em 0;
         text-align: center;
         line-height: 1;
+        max-width: 100%;
+        box-sizing: border-box;
       }
       .title h1 {
         margin: 0 0 0.5em 0;
@@ -61,6 +65,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         gap: 0.5em;
         justify-content: center;
         margin: 0.75em 0;
+        max-width: 100%;
       }
       .tag {
         background-color: var(--bg-subtle);
@@ -93,6 +98,8 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         font-weight: 500;
         transition: background-color 0.15s;
         border: 1px solid transparent;
+        max-width: 100%;
+        word-break: break-word;
       }
       .repo-button:hover {
         background-color: var(--bg);
