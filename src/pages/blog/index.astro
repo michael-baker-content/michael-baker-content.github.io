@@ -102,6 +102,7 @@ const posts = (await getCollection("blog")).sort(
   main {
     background: var(--posts-bg);
     padding: 3em 1em;
+    box-sizing: border-box;
   }
 
   .search-row {
@@ -111,6 +112,7 @@ const posts = (await getCollection("blog")).sort(
     gap: 1em;
     margin-bottom: 1.5em;
     flex-wrap: wrap;
+    max-width: 100%;
   }
   .page-title {
     font-size: 0.85em;
@@ -129,6 +131,7 @@ const posts = (await getCollection("blog")).sort(
     background: var(--bg-surface);
     color: var(--text);
     width: 220px;
+    max-width: 100%;
     outline: none;
   }
   #search:focus {
@@ -177,6 +180,7 @@ const posts = (await getCollection("blog")).sort(
     color: var(--text);
     text-decoration: none;
     font-size: 1em;
+    word-break: break-word;
   }
   .post-title a:hover {
     color: var(--accent);
@@ -186,5 +190,6 @@ const posts = (await getCollection("blog")).sort(
     color: var(--text-muted);
     margin: 0;
     line-height: 1.5;
+    word-break: break-word;
   }
 </style>
