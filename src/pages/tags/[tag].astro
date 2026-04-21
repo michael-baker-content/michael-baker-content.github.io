@@ -68,6 +68,7 @@ const { posts } = Astro.props;
   main {
     background: var(--posts-bg);
     padding: 3em 1em;
+    box-sizing: border-box;
   }
   .tag-header {
     margin-bottom: 2em;
@@ -119,6 +120,7 @@ const { posts } = Astro.props;
     color: var(--text);
     text-decoration: none;
     font-size: 1em;
+    word-break: break-word;
   }
   .post-title a:hover {
     color: var(--accent);
@@ -128,5 +130,6 @@ const { posts } = Astro.props;
     color: var(--text-muted);
     margin: 0;
     line-height: 1.5;
+    word-break: break-word;
   }
 </style>

@@ -177,4 +177,16 @@ import HeaderLink from "./HeaderLink.astro";
       font-size: 0.85em;
     }
   }
+  @media (max-width: 400px) {
+    nav a {
+      padding: 1em 0.25em;
+      font-size: 0.75em;
+    }
+    h2 {
+      font-size: 0.8em;
+    }
+    .internal-links a[href="/"] {
+      display: none;
+    }
+  }
 </style>

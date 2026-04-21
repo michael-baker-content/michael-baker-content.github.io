@@ -96,10 +96,9 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
 <style>
   main {
     background: var(--posts-bg);
-    padding-bottom: 2em;
+    padding: 3em 1em;
+    box-sizing: border-box;
   }
-  /* width: 720px;
-    max-width: calc(100% - 2em); */
 
   .search-row {
     display: flex;
@@ -144,8 +143,12 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
   .tag-list li {
     display: inline-block;
     margin: 0 0.75em 0.75em 0;
+    max-width: 100%;
   }
+
   .tag-item {
+    max-width: 100%;
+    word-break: break-word;
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
