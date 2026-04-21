@@ -99,12 +99,11 @@ const posts = (await getCollection("blog")).sort(
 </script>
 
 <style>
-  body {
-    background: var(--posts-bg); /* or --projects-bg */
-  }
   main {
-    padding-bottom: 2em;
+    background: var(--posts-bg);
+    padding: 3em 1em;
   }
+
   .search-row {
     display: flex;
     align-items: center;
@@ -171,14 +170,13 @@ const posts = (await getCollection("blog")).sort(
     color: var(--text-muted);
   }
   .post-title {
-    margin: 0 0 0.3em;
+    margin: 0 0 0.5em;
     line-height: 1.3;
   }
   .post-title a {
     color: var(--text);
     text-decoration: none;
     font-size: 1em;
-    font-weight: 500;
   }
   .post-title a:hover {
     color: var(--accent);

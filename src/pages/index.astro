@@ -121,18 +121,15 @@ const recentPosts = allPosts
 
 <style>
   main {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
   }
   .hero {
     background: var(--hero-bg);
-    margin: 0 -1em 0 -1em;
     padding: 4em 1em 3em;
   }
 
   @media (max-width: 720px) {
     .hero {
-      margin: 0 -1em 0 -1em;
       padding: 2.5em 1em 2em;
     }
   }
@@ -142,6 +139,11 @@ const recentPosts = allPosts
     margin-bottom: 0.4em;
     color: var(--text);
   }
+
+  .recent {
+    padding: 0 1em;
+  }
+
   .recent h2,
   .featured h2,
   .projects-section h2 {
@@ -228,6 +230,7 @@ const recentPosts = allPosts
     color: var(--accent-dark);
   }
   .featured {
+    padding: 0 1em;
     margin-top: 0;
     padding-top: 2em;
   }
@@ -248,7 +251,7 @@ const recentPosts = allPosts
     background: var(--bg-surface);
   }
   .featured-card .post-title a {
-    font-size: 1.2em;
+    font-size: 1em;
     color: var(--text);
     text-decoration: none;
   }
@@ -257,7 +260,6 @@ const recentPosts = allPosts
   }
   .projects-section {
     background: var(--projects-bg);
-    margin: 0 -1em 0 -1em;
     padding: 2em 1em;
   }
 
@@ -294,6 +296,7 @@ const recentPosts = allPosts
       columns: 1;
     }
   }
+
   .project-info {
     display: flex;
     align-items: baseline;
@@ -339,7 +342,6 @@ const recentPosts = allPosts
   }
   .posts-section {
     background: var(--posts-bg);
-    margin: 0 -1em 0 -1em;
     padding: 0 1em 2em;
   }
 </style>

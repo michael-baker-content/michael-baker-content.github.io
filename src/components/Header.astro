@@ -98,7 +98,7 @@ import HeaderLink from "./HeaderLink.astro";
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 720px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 1em;
     box-sizing: border-box;
@@ -164,13 +164,17 @@ import HeaderLink from "./HeaderLink.astro";
       font-size: 0.9em;
     }
   }
-  @media (max-width: 400px) {
+
+  @media (max-width: 520px) {
+    nav {
+      padding: 0 0.75em;
+    }
     nav a {
-      padding: 1em 0.25em;
-      font-size: 0.78em;
+      padding: 1em 0.3em;
+      font-size: 0.8em;
     }
     h2 {
-      font-size: 0.8em;
+      font-size: 0.85em;
     }
   }
 </style>

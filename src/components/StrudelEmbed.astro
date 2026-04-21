@@ -26,16 +26,19 @@ const src = `https://strudel.cc/embed/?code=${encoded}`;
 <style>
   .strudel-figure {
     margin: 1.5em 0;
+    width: 100%;
   }
   .strudel-container {
     width: 100%;
     border-radius: 8px;
     overflow: hidden;
     border: 0.5px solid var(--border);
+    box-sizing: border-box;
   }
   .strudel-container iframe {
     display: block;
     border: none;
+    width: 100%;
   }
   figcaption {
     font-size: 0.8em;
