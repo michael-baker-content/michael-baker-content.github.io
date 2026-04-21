@@ -8,52 +8,37 @@ import HeaderLink from "./HeaderLink.astro";
     <h2><a href="/">{SITE_TITLE}</a></h2>
     <div class="internal-links">
       <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/projects">Projects</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
       <HeaderLink href="/tags">Tags</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
+      <HeaderLink href="/projects">Projects</HeaderLink>
     </div>
-    <div class="right-controls">
-      <a
-        href="https://github.com/michael-baker-content"
-        target="_blank"
-        class="github-link"
+    <button id="theme-toggle" aria-label="Toggle light and dark mode">
+      <svg
+        id="icon-sun"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        aria-hidden="true"
       >
-        <span class="sr-only">Go to GitHub profile</span>
-        <svg viewBox="0 0 16 16" aria-hidden="true" width="24" height="24">
-          <path
-            fill="currentColor"
-            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-          ></path>
-        </svg>
-      </a>
-      <button id="theme-toggle" aria-label="Toggle light and dark mode">
-        <svg
-          id="icon-sun"
-          viewBox="0 0 24 24"
-          width="20"
-          height="20"
-          aria-hidden="true"
-        >
-          <path
-            fill="currentColor"
-            d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM1 11h3v2H1v-2z"
-          ></path>
-        </svg>
-        <svg
-          id="icon-moon"
-          viewBox="0 0 24 24"
-          width="20"
-          height="20"
-          aria-hidden="true"
-        >
-          <path
-            fill="currentColor"
-            d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
-          ></path>
-        </svg>
-      </button>
-    </div>
+        <path
+          fill="currentColor"
+          d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM1 11h3v2H1v-2z"
+        ></path>
+      </svg>
+      <svg
+        id="icon-moon"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        aria-hidden="true"
+      >
+        <path
+          fill="currentColor"
+          d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
+        ></path>
+      </svg>
+    </button>
   </nav>
 </header>
 
@@ -105,9 +90,19 @@ import HeaderLink from "./HeaderLink.astro";
 <style>
   header {
     margin: 0;
-    padding: 0 1em;
+    padding: 0;
     background: var(--bg-surface);
     border-bottom: 0.5px solid var(--border);
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1em;
+    box-sizing: border-box;
+    width: 100%;
   }
   h2 {
     margin: 0;
@@ -118,12 +113,15 @@ import HeaderLink from "./HeaderLink.astro";
   h2 a.active {
     text-decoration: none;
     color: var(--accent);
+    font-family: var(--font-syne);
+    font-size: 1.1em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
-  nav {
+  .internal-links {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1em;
+    gap: 0;
   }
   nav a {
     padding: 1em 0.5em;
@@ -138,26 +136,6 @@ import HeaderLink from "./HeaderLink.astro";
   nav a:hover {
     color: var(--text);
   }
-  .internal-links {
-    display: flex;
-    align-items: center;
-    gap: 0;
-  }
-  .right-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.75em;
-  }
-  .github-link {
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    padding: 0.5em;
-    border-bottom: none !important;
-  }
-  .github-link:hover {
-    color: var(--text);
-  }
   #theme-toggle {
     background: none;
     border: 0.5px solid var(--border);
@@ -168,6 +146,7 @@ import HeaderLink from "./HeaderLink.astro";
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
   #theme-toggle:hover {
     color: var(--text);
@@ -176,9 +155,6 @@ import HeaderLink from "./HeaderLink.astro";
   @media (max-width: 720px) {
     header {
       border-bottom: 0.5px solid var(--border);
-    }
-    .github-link {
-      display: none;
     }
     nav a {
       padding: 1em 0.35em;

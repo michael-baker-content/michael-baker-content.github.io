@@ -20,124 +20,131 @@ import { SITE_TITLE } from "../consts";
     <Header />
     <main>
       <div class="about-hero">
-        <div class="about-hero-image">
-          <CloudinaryImage
-            publicId="placeholder-4_rdttsz"
-            alt="About Michael Baker"
-            width={800}
-            bare={true}
-          />
-        </div>
-        <div class="about-hero-text">
-          <h1>About Me</h1>
-          <p>
-            Hi, I'm Michael. This blog is where I write in depth about projects
-            I'm working on — the thinking behind them, what I learned, and what
-            I'd do differently. It's a companion to my
-            <a href="https://github.com/michael-baker-content">GitHub profile</a
-            >, where the code lives.
-          </p>
-          <p>
-            My interests span a pretty wide range. On the web development side
-            I'm working through a structured frontend curriculum covering HTML,
-            CSS, JavaScript, React, and Node.js. I enjoy building small tools
-            and experimenting with APIs — my NBA Roto Tracker was an early
-            experiment in that direction, built with Flask and deployed on
-            Railway.
-          </p>
-          <p>
-            I'm drawn to the intersection of code and creativity. I've been
-            exploring generative art and creative coding with p5.js, and I'm
-            curious about audio-reactive visuals using tools like Strudel. Math
-            shows up in my work too — I've been learning LaTeX for typesetting
-            equations and exploring data science with Python, NumPy, Matplotlib,
-            and Seaborn.
-          </p>
-          <p>
-            On the design side I use Figma regularly and have experimented with
-            Webflow and Framer for design-to-deployment workflows. I'm also
-            curious about self-hosted tools and have been thinking about
-            standing up a WordPress instance from the terminal.
-          </p>
-          <p>
-            Posts here tend to be project-driven rather than tutorial-style. I
-            write about what I actually built, what problems I ran into, and
-            what I found interesting along the way. If you want to follow along,
-            the best place to start is the <a href="/blog">blog index</a> or browse
-            by
-            <a href="/tags">tag</a>.
-          </p>
+        <div class="about-hero-inner">
+          <div class="about-hero-image">
+            <CloudinaryImage
+              publicId="placeholder-4_rdttsz"
+              alt="About Michael Baker"
+              width={800}
+              bare={true}
+            />
+          </div>
+          <div class="about-hero-text">
+            <div class="inner">
+              <h1>About Me</h1>
+              <p>
+                Hi, I'm Michael. This blog is where I write in depth about
+                projects I'm working on — the thinking behind them, what I
+                learned, and what I'd do differently. It's a companion to my
+                <a href="https://github.com/michael-baker-content"
+                  >GitHub profile</a
+                >, where the code lives.
+              </p>
+              <p>
+                My interests span a pretty wide range. On the web development
+                side I'm working through a structured frontend curriculum
+                covering HTML, CSS, JavaScript, React, and Node.js. I enjoy
+                building small tools and experimenting with APIs — my NBA Roto
+                Tracker was an early experiment in that direction, built with
+                Flask and deployed on Railway.
+              </p>
+              <p>
+                I'm drawn to the intersection of code and creativity. I've been
+                exploring generative art and creative coding with p5.js, and I'm
+                curious about audio-reactive visuals using tools like Strudel.
+                Math shows up in my work too — I've been learning LaTeX for
+                typesetting equations and exploring data science with Python,
+                NumPy, Matplotlib, and Seaborn.
+              </p>
+              <p>
+                On the design side I use Figma regularly and have experimented
+                with Webflow and Framer for design-to-deployment workflows. I'm
+                also curious about self-hosted tools and have been thinking
+                about standing up a WordPress instance from the terminal.
+              </p>
+              <p>
+                Posts here tend to be project-driven rather than tutorial-style.
+                I write about what I actually built, what problems I ran into,
+                and what I found interesting along the way. If you want to
+                follow along, the best place to start is the <a href="/blog"
+                  >blog index</a
+                > or browse by <a href="/tags">tag</a>.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="tools-section">
-        <h2>Tools and technologies</h2>
-        <div class="tools-grid">
-          <div class="tool-group">
-            <h3>Languages and frameworks</h3>
-            <div class="tool-tags">
-              {
-                [
-                  "Python",
-                  "JavaScript",
-                  "HTML",
-                  "CSS",
-                  "Flask",
-                  "React",
-                  "Node.js",
-                  "Express.js",
-                ].map((tool) => <span class="tool-tag">{tool}</span>)
-              }
+        <div class="inner">
+          <h2>Tools and technologies</h2>
+          <div class="tools-grid">
+            <div class="tool-group">
+              <h3>Languages and frameworks</h3>
+              <div class="tool-tags">
+                {
+                  [
+                    "Python",
+                    "JavaScript",
+                    "HTML",
+                    "CSS",
+                    "Flask",
+                    "React",
+                    "Node.js",
+                    "Express.js",
+                  ].map((tool) => <span class="tool-tag">{tool}</span>)
+                }
+              </div>
             </div>
-          </div>
-          <div class="tool-group">
-            <h3>Data science</h3>
-            <div class="tool-tags">
-              {
-                ["NumPy", "Matplotlib", "Seaborn"].map((tool) => (
-                  <span class="tool-tag">{tool}</span>
-                ))
-              }
+            <div class="tool-group">
+              <h3>Data science</h3>
+              <div class="tool-tags">
+                {
+                  ["NumPy", "Matplotlib", "Seaborn"].map((tool) => (
+                    <span class="tool-tag">{tool}</span>
+                  ))
+                }
+              </div>
             </div>
-          </div>
-          <div class="tool-group">
-            <h3>Creative coding</h3>
-            <div class="tool-tags">
-              {
-                ["p5.js", "Strudel", "LaTeX"].map((tool) => (
-                  <span class="tool-tag">{tool}</span>
-                ))
-              }
+            <div class="tool-group">
+              <h3>Creative coding</h3>
+              <div class="tool-tags">
+                {
+                  ["p5.js", "Strudel", "LaTeX"].map((tool) => (
+                    <span class="tool-tag">{tool}</span>
+                  ))
+                }
+              </div>
             </div>
-          </div>
-          <div class="tool-group">
-            <h3>Design and no-code</h3>
-            <div class="tool-tags">
-              {
-                ["Figma", "Webflow", "Framer"].map((tool) => (
-                  <span class="tool-tag">{tool}</span>
-                ))
-              }
+            <div class="tool-group">
+              <h3>Design and no-code</h3>
+              <div class="tool-tags">
+                {
+                  ["Figma", "Webflow", "Framer"].map((tool) => (
+                    <span class="tool-tag">{tool}</span>
+                  ))
+                }
+              </div>
             </div>
-          </div>
-          <div class="tool-group">
-            <h3>Infrastructure and deployment</h3>
-            <div class="tool-tags">
-              {
-                ["GitHub", "GitHub Actions", "Railway", "Cloudinary"].map(
-                  (tool) => <span class="tool-tag">{tool}</span>,
-                )
-              }
+            <div class="tool-group">
+              <h3>Infrastructure and deployment</h3>
+              <div class="tool-tags">
+                {
+                  ["GitHub", "GitHub Actions", "Railway", "Cloudinary"].map(
+                    (tool) => <span class="tool-tag">{tool}</span>,
+                  )
+                }
+              </div>
             </div>
-          </div>
-          <div class="tool-group">
-            <h3>Currently exploring</h3>
-            <div class="tool-tags">
-              {
-                ["Next.js", "WordPress", "Web animation"].map((tool) => (
-                  <span class="tool-tag">{tool}</span>
-                ))
-              }
+            <div class="tool-group">
+              <h3>Currently exploring</h3>
+              <div class="tool-tags">
+                {
+                  ["Next.js", "WordPress", "Web animation"].map((tool) => (
+                    <span class="tool-tag">{tool}</span>
+                  ))
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -154,10 +161,16 @@ import { SITE_TITLE } from "../consts";
     max-width: 100%;
   }
   .about-hero {
-    background: var(--hero-bg);
+    background: var(--bg);
+  }
+  .about-hero-inner {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 2fr;
     min-height: 500px;
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--hero-bg);
+    overflow: hidden;
   }
   .about-hero-image {
     overflow: hidden;
@@ -175,12 +188,17 @@ import { SITE_TITLE } from "../consts";
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.5em;
+    background: var(--hero-bg);
+  }
+  .about-hero-text .inner {
+    max-width: 480px;
+    width: 100%;
   }
   .about-hero-text h1 {
     font-size: 2em;
     margin: 0 0 0.5em;
     color: var(--text);
+    font-family: var(--font-syne);
   }
   .about-hero-text p {
     font-size: 0.9em;
@@ -192,8 +210,14 @@ import { SITE_TITLE } from "../consts";
     color: var(--accent);
   }
   .tools-section {
+    background: var(--bg);
+  }
+  .tools-section .inner {
     background: var(--projects-bg);
+    max-width: 860px;
+    margin: 0 auto;
     padding: 3em;
+    box-sizing: border-box;
   }
   .tools-section h2 {
     font-size: 0.85em;
@@ -202,12 +226,13 @@ import { SITE_TITLE } from "../consts";
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin: 0 0 1.5em;
+    font-family: var(--font-syne);
   }
   .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2em;
-    max-width: 900px;
+    width: 100%;
   }
   .tool-group h3 {
     font-size: 0.85em;
@@ -229,16 +254,21 @@ import { SITE_TITLE } from "../consts";
     border: 0.5px solid var(--border);
   }
   @media (max-width: 720px) {
-    .about-hero {
+    .about-hero-inner {
       grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      max-width: 100%;
     }
     .about-hero-image {
       height: 250px;
+      grid-row: 1;
     }
     .about-hero-text {
+      grid-row: 2;
       padding: 2em 1.5em;
     }
-    .tools-section {
+    .tools-section .inner {
+      max-width: 100%;
       padding: 2em 1.5em;
     }
   }
