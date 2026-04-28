@@ -4,7 +4,7 @@ description: "How I built and deployed a Flask app that pulls live NBA data from
 pubDate: "2025-01-10"
 repoUrl: "https://github.com/michael-baker-content/nba-roto-tracker"
 tags: ["python", "flask", "api", "railway", "backend"]
-featured: true
+featured: false
 ---
 
 ## Overview
