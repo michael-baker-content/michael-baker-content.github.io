@@ -18,6 +18,22 @@ export interface Project {
 
 export const projects: Project[] = [
 	{
+		slug: 'cine2helper',
+		name: 'Cine2Helper',
+		description: 'A companion tool for Cine2Nerdle Battle hosted on Vercel.',
+		overview: `This is the first Next.js project that I've deployed, and also the first project I've deployed on Vercel.`,
+		repoUrl: 'https://github.com/michael-baker-content/cine2helper',
+		liveUrl: 'https://cine2helper.vercel.app',
+		tags: ['nextjs', 'vercel', 'api', 'react', 'movies', 'tmdb'],
+		status: 'complete',
+		type: 'web-app',
+		learningFocus: 'API integration and cloud deployment',
+		startDate: '2026-04-24',
+		featured: true,
+		blogPosts: ['cine2helper-next-app'],
+		image: 'placeholder-4_rdttsz',
+	},
+	{
 		slug: 'nba-roto-tracker',
 		name: 'NBA Roto Tracker',
 		description: 'A Flask app that pulls live NBA data from a third party API. An experiment in working with APIs and deploying to Railway.',
@@ -29,7 +45,7 @@ export const projects: Project[] = [
 		type: 'web-app',
 		learningFocus: 'API integration and cloud deployment',
 		startDate: '2024-12',
-		featured: true,
+		featured: false,
 		blogPosts: ['nba-roto-tracker'],
 		image: 'placeholder-2_cjqrms',
 	},
