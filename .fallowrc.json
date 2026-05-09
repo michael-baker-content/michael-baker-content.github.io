@@ -1,0 +1,17 @@
+{
+    "entry": [
+        "src/pages/**/*.{ts,tsx,js,jsx,astro}",
+        "src/layouts/**/*.astro",
+        "src/components/**/*.astro",
+        "src/components/**/*.{ts,tsx,js,jsx}",
+        "src/data/**/*.ts",
+        "public/sketches/**/*.js"
+    ],
+    "ignorePatterns": [
+        "public/sketches/**",
+        "src/components/MafsChart.jsx"
+    ],
+    "rules": {
+        "unused-dependencies": "off"
+    }
+}
