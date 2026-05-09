@@ -4,7 +4,7 @@ description: "I built a Next app that uses API data from TMDB."
 pubDate: "2026-04-26"
 repoUrl: "https://github.com/michael-baker-content/cine2helper"
 tags: ["nextjs", "vercel", "api", "react", "movies", "tmdb"]
-featured: true
+featured: false
 ---
 
 ## Overview

@@ -18,6 +18,22 @@ export interface Project {
 
 export const projects: Project[] = [
 	{
+		slug: 'bakerlinks',
+		name: 'BakerLinks',
+		description: 'BakerLinks',
+		overview: `This is the first Next.js project that I've deployed, and also the first project I've deployed on Vercel.`,
+		repoUrl: 'https://github.com/michael-baker-content/bakerlinks',
+		liveUrl: 'https://bakerlinks.com',
+		tags: ["nextjs", "vercel", "supabase", "react", "auth", "platform"],
+		status: 'complete',
+		type: 'web-app',
+		learningFocus: 'Authorization and cloud deployment',
+		startDate: '2026-05-09',
+		featured: true,
+		blogPosts: ['creating-bakerlinks'],
+		image: 'placeholder-3_fnchav',
+	},
+	{
 		slug: 'cine2helper',
 		name: 'Cine2Helper',
 		description: 'A companion tool for Cine2Nerdle Battle hosted on Vercel.',
