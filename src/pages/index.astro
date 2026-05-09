@@ -6,6 +6,7 @@ import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import { projects } from "../data/projects";
+
 const featuredProjects = projects.filter((p) => p.featured);
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
@@ -29,14 +30,17 @@ const recentPosts = allPosts
     <Header />
     <main>
       <section class="hero">
-        <h1>Hello, I'm Michael Baker.</h1>
-        <p class="tagline">
-          This site is where I speak in depth about code I've written, projects
-          I'm working on, and creative tools I'm developing. Thanks for joining
-          me!
-        </p>
-        <a href="/blog" class="browse-btn">Browse all posts</a>
+        <div class="hero-canvas" id="hero-canvas"></div>
+        <div class="hero-content">
+          <h1>Michael Baker</h1>
+          <p class="tagline">
+            In-depth writing about code, creative tools, and projects in
+            progress.
+          </p>
+          <a href="/blog" class="browse-btn">Browse all posts</a>
+        </div>
       </section>
+
       {
         featuredProjects.length > 0 && (
           <section class="projects-section">
@@ -71,23 +75,26 @@ const recentPosts = allPosts
         {
           featuredPost && (
             <section class="featured">
-              <h2>Featured Post</h2>
-              <div class="featured-card">
-                <div class="post-meta">
-                  <FormattedDate date={featuredPost.data.pubDate} />
-                  {featuredPost.data.tags &&
-                    featuredPost.data.tags.length > 0 && (
-                      <span class="tag-preview">
-                        {featuredPost.data.tags[0]}
-                      </span>
-                    )}
+              <div class="featured-canvas" id="featured-canvas" />
+              <div class="featured-content">
+                <h2>Featured Post</h2>
+                <div class="featured-card">
+                  <div class="post-meta">
+                    <FormattedDate date={featuredPost.data.pubDate} />
+                    {featuredPost.data.tags &&
+                      featuredPost.data.tags.length > 0 && (
+                        <span class="tag-preview">
+                          {featuredPost.data.tags[0]}
+                        </span>
+                      )}
+                  </div>
+                  <h3 class="post-title">
+                    <a href={`/blog/${featuredPost.id}/`}>
+                      {featuredPost.data.title}
+                    </a>
+                  </h3>
+                  <p class="post-desc">{featuredPost.data.description}</p>
                 </div>
-                <h3 class="post-title">
-                  <a href={`/blog/${featuredPost.id}/`}>
-                    {featuredPost.data.title}
-                  </a>
-                </h3>
-                <p class="post-desc">{featuredPost.data.description}</p>
               </div>
             </section>
           )
@@ -116,8 +123,9 @@ const recentPosts = allPosts
           <a href="/blog" class="all-posts-link">All posts →</a>
         </section>
       </div>
+
+      <Footer />
     </main>
-    <Footer />
   </body>
 </html>
 
@@ -126,10 +134,29 @@ const recentPosts = allPosts
     padding: 0;
   }
   .hero {
+    position: relative;
     background: var(--hero-bg);
+    margin: 0;
     padding: 4em 1em 3em;
+    overflow: hidden;
   }
-
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .hero-canvas canvas {
+    display: block;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 768px) {
+    .hero-canvas {
+      display: none;
+    }
+  }
   @media (max-width: 720px) {
     .hero {
       padding: 2.5em 1em 2em;
@@ -241,9 +268,28 @@ const recentPosts = allPosts
     color: var(--accent-dark);
   }
   .featured {
-    padding: 0 1em;
+    position: relative;
     margin-top: 0;
     padding-top: 2em;
+    overflow: hidden;
+  }
+  .featured-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 1;
+  }
+  .featured-canvas canvas {
+    display: block;
+  }
+  .featured-content {
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 768px) {
+    .featured-canvas {
+      display: none;
+    }
   }
   .featured h2 {
     font-size: 0.85em;
@@ -377,3 +423,240 @@ const recentPosts = allPosts
     padding: 0 1em 2em;
   }
 </style>
+<script>
+  declare global {
+    interface Window {
+      p5: any;
+    }
+  }
+
+  async function initHeroSketch() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth < 768) return;
+
+    const container = document.getElementById("hero-canvas");
+    if (!container) return;
+
+    if (!window.p5) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    if ((container as any)._p5instance) {
+      (container as any)._p5instance.remove();
+      (container as any)._p5instance = null;
+    }
+
+    const sketchFn = (p: any) => {
+      let shapes: any[] = [];
+
+      function getColors() {
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark" ||
+          (!document.documentElement.getAttribute("data-theme") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        return isDark
+          ? { fill: [80, 140, 40, 18], stroke: [120, 180, 60, 55] }
+          : { fill: [160, 200, 100, 25], stroke: [80, 140, 40, 70] };
+      }
+
+      class Shape {
+        x!: number;
+        y!: number;
+        size!: number;
+        speedX!: number;
+        speedY!: number;
+        rotation!: number;
+        rotationSpeed!: number;
+        sides!: number;
+        noiseOffset!: number;
+        constructor() {
+          this.reset(true);
+        }
+        reset(randomY = false) {
+          this.x = p.random(p.width);
+          this.y = randomY ? p.random(p.height) : p.random(-100, -20);
+          this.size = p.random(40, 120);
+          this.speedX = p.random(-0.15, 0.15);
+          this.speedY = p.random(0.1, 0.35);
+          this.rotation = p.random(p.TWO_PI);
+          this.rotationSpeed = p.random(-0.003, 0.003);
+          this.sides = Math.floor(p.random(3, 7));
+          this.noiseOffset = p.random(1000);
+        }
+        update() {
+          this.x += this.speedX + (p.noise(this.noiseOffset) - 0.5) * 0.3;
+          this.y += this.speedY;
+          this.rotation += this.rotationSpeed;
+          this.noiseOffset += 0.005;
+          if (this.y > p.height + 100) this.reset();
+        }
+        draw(colors: any) {
+          p.push();
+          p.translate(this.x, this.y);
+          p.rotate(this.rotation);
+          p.fill(...colors.fill);
+          p.stroke(...colors.stroke);
+          p.strokeWeight(1);
+          p.beginShape();
+          for (let i = 0; i < this.sides; i++) {
+            const angle = (p.TWO_PI / this.sides) * i;
+            p.vertex(
+              Math.cos(angle) * this.size * 0.5,
+              Math.sin(angle) * this.size * 0.5,
+            );
+          }
+          p.endShape(p.CLOSE);
+          p.pop();
+        }
+      }
+
+      p.setup = function () {
+        const container = p.canvas.parentElement;
+        p.createCanvas(container.offsetWidth, container.offsetHeight);
+      };
+
+      p.draw = function () {
+        const colors = getColors();
+        p.clear();
+        if (shapes.length === 0) {
+          for (let i = 0; i < 18; i++) shapes.push(new Shape());
+        }
+        shapes.forEach((s: Shape) => {
+          s.update();
+          s.draw(colors);
+        });
+      };
+
+      p.windowResized = function () {
+        const container = p.canvas.parentElement;
+        p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+      };
+    };
+
+    (container as any)._p5instance = new window.p5(sketchFn, container);
+  }
+
+  async function initFeaturedSketch() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth < 768) return;
+
+    const container = document.getElementById("featured-canvas");
+    if (!container) return;
+
+    if (!window.p5) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    if ((container as any)._p5instance) {
+      (container as any)._p5instance.remove();
+      (container as any)._p5instance = null;
+    }
+
+    const sketchFn = (p: any) => {
+      let threads: any[] = [];
+
+      function getColors() {
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark" ||
+          (!document.documentElement.getAttribute("data-theme") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        return isDark
+          ? { stroke: [120, 180, 60, 30] }
+          : { stroke: [80, 140, 40, 40] };
+      }
+
+      class Thread {
+        x!: number;
+        y!: number;
+        length!: number;
+        angle!: number;
+        speedX!: number;
+        speedY!: number;
+        noiseOffset!: number;
+        weight!: number;
+
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(randomPos = false) {
+          this.x = p.random(p.width);
+          this.y = randomPos ? p.random(p.height) : p.random(-50, -10);
+          this.length = p.random(100, 250);
+          this.angle = p.random(p.TWO_PI);
+          this.speedX = p.random(-0.2, 0.2);
+          this.speedY = p.random(0.15, 0.4);
+          this.noiseOffset = p.random(1000);
+          this.weight = p.random(1, 2.5);
+        }
+
+        update() {
+          this.x += this.speedX + (p.noise(this.noiseOffset) - 0.5) * 0.4;
+          this.y += this.speedY;
+          this.angle += (p.noise(this.noiseOffset + 500) - 0.5) * 0.02;
+          this.noiseOffset += 0.004;
+          if (this.y > p.height + 100) this.reset();
+        }
+
+        draw(colors: any) {
+          p.push();
+          p.translate(this.x, this.y);
+          p.rotate(this.angle);
+          p.stroke(...colors.stroke);
+          p.strokeWeight(this.weight);
+          p.noFill();
+          p.beginShape();
+          for (let i = 0; i < this.length; i += 5) {
+            const nx = p.noise(this.noiseOffset + i * 0.05) * 8 - 4;
+            p.curveVertex(nx, i - this.length / 2);
+          }
+          p.endShape();
+          p.pop();
+        }
+      }
+
+      p.setup = function () {
+        const cont = p.canvas.parentElement;
+        p.createCanvas(cont.offsetWidth, cont.offsetHeight);
+        for (let i = 0; i < 40; i++) threads.push(new Thread());
+      };
+
+      p.draw = function () {
+        const colors = getColors();
+        p.clear();
+        threads.forEach((t: Thread) => {
+          t.update();
+          t.draw(colors);
+        });
+      };
+
+      p.windowResized = function () {
+        const cont = p.canvas.parentElement;
+        p.resizeCanvas(cont.offsetWidth, cont.offsetHeight);
+      };
+    };
+
+    (container as any)._p5instance = new window.p5(sketchFn, container);
+  }
+
+  initHeroSketch();
+  initFeaturedSketch();
+  document.addEventListener("astro:after-swap", () => {
+    initHeroSketch();
+    initFeaturedSketch();
+  });
+</script>
