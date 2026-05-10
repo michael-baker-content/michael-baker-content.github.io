@@ -1,0 +1,62 @@
+---
+title: "Building and Deploying This Blog with Astro"
+description: "A walkthrough of how I built this site — from scaffolding an Astro project to deploying on GitHub Pages, and the features I added along the way."
+pubDate: "2026-04-01"
+repoUrl: "https://github.com/michael-baker-content/michael-baker-content.github.io"
+tags: ["astro", "mdx", "github-pages", "javascript", "css"]
+featured: false
+---
+
+This site is the first project I'm writing about in depth — which feels appropriate since building it was itself a significant learning experience. This post covers the full arc from initial scaffold to the finished site you're reading now.
+
+## Why Astro
+
+The goal was a blog that would serve as a companion to my GitHub repos — somewhere to go in depth on projects rather than just link to code. I wanted full control over the output, good support for technical content like code blocks and math equations, and a deployment pipeline that would get out of the way.
+
+Astro fit well. It generates static HTML by default, has first-class MDX support, and deploys cleanly to GitHub Pages via a GitHub Actions workflow. The "islands" architecture means client-side JavaScript only loads where it's actually needed, which matters when you're embedding live sketches and interactive components.
+
+## Scaffolding and deployment
+
+The project started from Astro's blog starter template, which sets up content collections out of the box. Since the GitHub repo wasn't empty when I scaffolded, I had to work around the scaffolder's refusal to write into a non-empty directory — the fix was scaffolding into a temp folder and moving the files up.
+
+Deployment to GitHub Pages required a GitHub Actions workflow and setting the repo's Pages source to GitHub Actions rather than a branch. The workflow installs Node 22, runs `npm run build`, and uploads the `dist` folder as a Pages artifact. Every push to `main` triggers a deploy.
+
+## Content features
+
+**MDX** is the format for all posts — it's Markdown with the ability to import and render React or Astro components inline. This is what makes the interactive embeds possible.
+
+**KaTeX** handles math rendering via `remark-math` and `rehype-katex`. Equations are written as standard LaTeX — `$...$` for inline and `$$...$$` for display math. For complex expressions in MDX that contain curly braces, a small `Math.astro` wrapper component accepts the formula as a string prop to avoid MDX's JSX parser conflicting with LaTeX syntax.
+
+**Syntax highlighting** uses Astro's built-in Shiki with dual themes — `min-light` for light mode and `github-dark` for dark mode. With `defaultColor: false`, Shiki outputs both theme's colors as CSS custom properties on each token, and CSS rules map those to the current theme based on the `data-theme` attribute set by the toggle.
+
+## Interactive embeds
+
+Three reusable components handle live content embedded in posts:
+
+**P5Sketch** loads p5.js from a CDN and dynamically imports a sketch file from `public/sketches/`. The sketch exports a default function that receives a p5 instance — setup, draw, and windowResized are defined on it in the usual p5 instance mode pattern.
+
+**MafsChart** wraps the Mafs React library for interactive mathematical figures. Since functions can't be passed as props through MDX with `client:load`, the component defines preset functions internally and selects between them via a `type` prop. A `MutationObserver` watches the `data-theme` attribute so the chart colors update when you toggle the theme.
+
+**StrudelEmbed** URL-encodes a Strudel pattern and embeds the Strudel REPL as an iframe. The simplest of the three — no dependencies beyond an iframe and some CSS.
+
+## Design
+
+The site uses a warm gray palette in light mode and near-black in dark mode, with lime green as the accent color. The Syne font is used for headings and the site title. Dark mode follows the system preference by default but can be overridden with a toggle that persists via `localStorage`.
+
+The homepage has three colored bands — hero green, projects green, and posts green — that correspond to the background colors used on the projects and blog pages. The white margins on either side of the content at wider viewports are the body background, which uses a gradient that fades from green at the edges to warm gray at the center.
+
+The hero and featured post sections have ambient animated backgrounds built with p5.js — slow drifting polygon shapes in the hero and drifting thread lines in the featured section. Both are disabled when `prefers-reduced-motion` is set or on mobile.
+
+## Image hosting
+
+Images are served from Cloudinary rather than committed to the repo. A `CloudinaryImage` component generates optimized URLs with `f_auto` and `q_auto` transforms, serving WebP or AVIF depending on browser support. The cloud name is stored as an environment variable and passed to the GitHub Actions build as a repository secret.
+
+## What I would do differently
+
+The main thing I underestimated was how much CSS specificity and scoping would require attention as the site grew. Astro scopes component styles by default, which is generally helpful but occasionally means `:global()` wrappers are needed to target elements inside child components.
+
+I also added several features — Mafs, Strudel, p5.js — without a clear content plan for each. Having a post ready to go alongside each feature would have been a better workflow than adding capabilities and then figuring out what to write about them.
+
+## What's next
+
+The site is the infrastructure. The work now is filling it with real content — posts that go deep on actual projects rather than the boilerplate placeholders that are here now. This post is the first of those.
