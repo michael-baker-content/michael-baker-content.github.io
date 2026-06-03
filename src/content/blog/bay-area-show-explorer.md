@@ -1,8 +1,10 @@
 ---
-title: 'Building Bay Area Show Explorer'
+title: 'Building Show Explorer'
 description: 'How I turned thin concert listings into a reviewable music discovery workflow — and what I learned about trust, ambiguity, and data quality along the way.'
 pubDate: '2026-06-02'
-tags: ['javascript', 'music', 'local-discovery', 'data-quality']
+repoUrl: 'https://github.com/michael-baker-content/bay-area-music-calendar'
+# liveUrl: 'https://sfcalendar.netlify.app'
+tags: ['javascript', 'music', 'entertainment', 'data-quality']
 ---
 
 Bay Area Show Explorer started from a familiar local-discovery problem: concert listings are useful, but they are thin. They tell you what is happening, but they often do not explain who the artist is, whether they are local, where to support them, or how trustworthy the imported data is.

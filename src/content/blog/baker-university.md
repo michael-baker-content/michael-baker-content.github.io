@@ -2,6 +2,8 @@
 title: 'Building Baker University'
 description: 'A learning-platform experiment exploring course structure, rich lesson editing, and technical content support — and what online art education taught me about building for attention.'
 pubDate: '2026-06-02'
+repoUrl: 'https://github.com/michael-baker-content/bakeruniversity'
+liveUrl: 'https://bakeruniversity.vercel.app'
 tags: ['nextjs', 'tiptap', 'katex', 'learning-platform', 'typescript']
 ---
 

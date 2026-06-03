@@ -1,5 +1,5 @@
 ---
-title: 'What I Am Building Now'
+title: "What I'm Building Now"
 description: 'A tour through the projects I am developing, how they work, where they fit together, and the product challenges they are helping me explore.'
 pubDate: '2026-06-02'
 tags: ['projects', 'product', 'frontend', 'prototypes']
@@ -22,9 +22,9 @@ The interesting part is not just the visual redesign. The useful part is the con
 
 The newest feature is the backend dashboard. The public site can now load a saved content document from Vercel Blob at runtime. The admin route lets me edit homepage copy and case-study content in the browser and keep the live site current without making every copy tweak a code change.
 
-## Bay Area Show Explorer
+## Show Explorer
 
-Bay Area Show Explorer is a local music discovery tool. At first glance, it is about concerts: who is playing, where they are playing, and what events are coming up. But the more interesting product problem is trust.
+Show Explorer is a local music discovery tool. At first glance, it is about concerts: who is playing, where they are playing, and what events are coming up. But the more interesting product problem is trust.
 
 The app treats thin concert listings as the start of a review workflow instead of the final product. Records can be enriched, reviewed, and kept traceable back to sources. That creates a more careful discovery experience: automated where automation helps, but still honest about uncertainty.
 
@@ -60,4 +60,4 @@ Looking across these projects, the pattern is clear to me now. I am building aro
 - How do you keep tools focused enough that they stay useful?
 - How do you make content editable without losing control of the underlying system?
 
-Portfolio Deluxe, Bay Area Show Explorer, BakerLinks, Baker University, the blog, and the smaller utilities all answer those questions from different angles. Together they are becoming more than a collection of repos. They are a practice: product thinking, frontend craft, writing, data structure, deployment, and content operations reinforcing each other.
+Portfolio Deluxe, Show Explorer, BakerLinks, Baker University, the blog, and the smaller utilities all answer those questions from different angles. Together they are becoming more than a collection of repos. They are a practice: product thinking, frontend craft, writing, data structure, deployment, and content operations reinforcing each other.

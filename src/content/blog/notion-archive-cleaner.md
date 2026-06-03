@@ -2,6 +2,8 @@
 title: 'Building Notion Archive Cleaner'
 description: 'How I built a small utility for cleaning UUID-appended filenames from Notion exports — and what a narrow tool taught me about product thinking at small scale.'
 pubDate: '2026-06-02'
+repoUrl: 'https://github.com/michael-baker-content/notion-clean'
+liveUrl: 'https://michael-baker-content.github.io/notion-clean/'
 tags: ['javascript', 'python', 'notion', 'utility', 'workflow']
 ---
 

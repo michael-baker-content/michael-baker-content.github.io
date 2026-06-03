@@ -2,6 +2,8 @@
 title: 'Building Portfolio Deluxe'
 description: 'How I turned a forked portfolio starter into a content system with case studies, a filterable project index, a contact form, and a small admin dashboard.'
 pubDate: '2026-06-02'
+repoUrl: 'https://github.com/michael-baker-content/portfolio-deluxe'
+liveUrl: 'https://michaelbaker.vercel.app'
 tags: ['react', 'vite', 'tailwind', 'vercel', 'content-system']
 ---
 

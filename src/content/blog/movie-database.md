@@ -2,10 +2,12 @@
 title: 'Building the Movie Database Project'
 description: 'How I used TMDB data to build a focused movie lookup tool — and why resisting encyclopedic completeness is the interesting design challenge.'
 pubDate: '2026-06-02'
+repoUrl: 'https://github.com/michael-baker-content/cine2helper'
+liveUrl: 'https://cine2helper.vercel.app'
 tags: ['nextjs', 'typescript', 'tmdb', 'react']
 ---
 
-Movie Database Project is a focused lookup tool built around TMDB data. The important word is focused. The goal is not to recreate a general-purpose movie encyclopedia. The goal is to support a specific entertainment workflow where fast recall, scanning, and metadata are more useful than endless browsing.
+Movie Database Project — built as Cine2Helper — is a focused lookup tool built around TMDB data. The important word is focused. The goal is not to recreate a general-purpose movie encyclopedia. The goal is to support a specific entertainment workflow where fast recall, scanning, and metadata are more useful than endless browsing.
 
 ## The Stack
 

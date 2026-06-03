@@ -2,10 +2,12 @@
 title: 'Building the RPG Character Tracker'
 description: 'How I approached dynamic character management for Pathfinder 2E — and what dense tabletop rules taught me about interface design for complex state.'
 pubDate: '2026-06-02'
+repoUrl: 'https://github.com/michael-baker-content/saske'
+liveUrl: 'https://michael-baker-content.github.io/saske/'
 tags: ['javascript', 'ttrpg', 'pathfinder-2e', 'interface-design']
 ---
 
-RPG Character Tracker is a dynamic character-management tool for rules-heavy tabletop systems. It started from Pathfinder 2E, which gives the project a useful constraint: the rules are dense enough that a static sheet can become friction during play.
+RPG Character Tracker is a dynamic character-management tool for rules-heavy tabletop systems. This app is specifically designed to provide support while playing as my ranger character, Saske. It started from Pathfinder 2E, which gives the project a useful constraint: the game's rules are dense enough that a static sheet can become friction during play.
 
 ## The Problem With Static Character Sheets
 

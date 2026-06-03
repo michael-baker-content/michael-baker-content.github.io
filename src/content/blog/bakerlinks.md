@@ -2,6 +2,8 @@
 title: 'Building BakerLinks'
 description: 'How I built a free link-in-bio platform focused on simple publishing, hosted data, and clean public profile pages — and why restraint is the interesting design challenge.'
 pubDate: '2026-06-02'
+repoUrl: 'https://github.com/michael-baker-content/bakerlinks'
+liveUrl: 'https://bakerlinks.com'
 tags: ['nextjs', 'supabase', 'publishing', 'product']
 ---
 
