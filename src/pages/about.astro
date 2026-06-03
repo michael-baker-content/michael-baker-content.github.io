@@ -33,42 +33,32 @@ import { SITE_TITLE } from "../consts";
             <div class="inner">
               <h1>About Me</h1>
               <p>
-                Hi, I'm Michael. This blog is where I write in depth about
-                projects I'm working on — the thinking behind them, what I
-                learned, and what I'd do differently. It's a companion to my
-                <a href="https://github.com/michael-baker-content"
-                  >GitHub profile</a
-                >, where the code lives.
+                I'm Michael. I build web products, tools, and publishing systems
+                — and I write about them here. The projects range from practical
+                utilities to platform experiments, but the common thread is
+                turning messy or scattered information into something more
+                useful and navigable.
               </p>
               <p>
-                My interests span a pretty wide range. On the web development
-                side I'm working through a structured frontend curriculum
-                covering HTML, CSS, JavaScript, React, and Node.js. I enjoy
-                building small tools and experimenting with APIs — my NBA Roto
-                Tracker was an early experiment in that direction, built with
-                Flask and deployed on Railway.
+                Recent work includes a local music discovery tool that treats
+                concert listings as a review workflow, a link-in-bio publishing
+                platform, a learning platform experiment with rich lesson
+                authoring, and a fantasy sports dashboard that turned a
+                spreadsheet into a shared interface. The work spans frontend,
+                backend, deployment, and content systems.
               </p>
               <p>
-                I'm drawn to the intersection of code and creativity. I've been
-                exploring generative art and creative coding with p5.js, and I'm
-                curious about audio-reactive visuals using tools like Strudel.
-                Math shows up in my work too — I've been learning LaTeX for
-                typesetting equations and exploring data science with Python,
-                NumPy, Matplotlib, and Seaborn.
+                I have a background in online art education, which shapes how I
+                think about interfaces: structure and expressiveness need to
+                coexist, and the best tools disappear when they are working
+                well.
               </p>
               <p>
-                On the design side I use Figma regularly and have experimented
-                with Webflow and Framer for design-to-deployment workflows. I'm
-                also curious about self-hosted tools and have been thinking
-                about standing up a WordPress instance from the terminal.
-              </p>
-              <p>
-                Posts here tend to be project-driven rather than tutorial-style.
-                I write about what I actually built, what problems I ran into,
-                and what I found interesting along the way. If you want to
-                follow along, the best place to start is the <a href="/blog"
-                  >blog index</a
-                > or browse by <a href="/tags">tag</a>.
+                Posts here are project retrospectives rather than tutorials —
+                what was built, what was difficult, what I would do differently.
+                The best place to start is the <a href="/blog">blog</a>, the <a
+                  href="/projects">projects</a
+                > index, or browse by <a href="/tags">tag</a>.
               </p>
             </div>
           </div>
@@ -80,27 +70,42 @@ import { SITE_TITLE } from "../consts";
           <h2>Tools and technologies</h2>
           <div class="tools-grid">
             <div class="tool-group">
-              <h3>Languages and frameworks</h3>
+              <h3>Frontend</h3>
               <div class="tool-tags">
                 {
                   [
-                    "Python",
+                    "React",
+                    "Next.js",
+                    "Astro",
                     "JavaScript",
+                    "TypeScript",
                     "HTML",
                     "CSS",
-                    "Flask",
-                    "React",
-                    "Node.js",
-                    "Express.js",
+                    "Tailwind",
                   ].map((tool) => <span class="tool-tag">{tool}</span>)
                 }
               </div>
             </div>
             <div class="tool-group">
-              <h3>Data science</h3>
+              <h3>Backend and data</h3>
               <div class="tool-tags">
                 {
-                  ["NumPy", "Matplotlib", "Seaborn"].map((tool) => (
+                  [
+                    "Python",
+                    "Flask",
+                    "Node.js",
+                    "Supabase",
+                    "SQLite",
+                    "PostgreSQL",
+                  ].map((tool) => <span class="tool-tag">{tool}</span>)
+                }
+              </div>
+            </div>
+            <div class="tool-group">
+              <h3>Content and authoring</h3>
+              <div class="tool-tags">
+                {
+                  ["MDX", "Tiptap", "KaTeX", "Cloudinary"].map((tool) => (
                     <span class="tool-tag">{tool}</span>
                   ))
                 }
@@ -110,7 +115,7 @@ import { SITE_TITLE } from "../consts";
               <h3>Creative coding</h3>
               <div class="tool-tags">
                 {
-                  ["p5.js", "Strudel", "LaTeX"].map((tool) => (
+                  ["p5.js", "Strudel", "Mafs"].map((tool) => (
                     <span class="tool-tag">{tool}</span>
                   ))
                 }
@@ -127,22 +132,12 @@ import { SITE_TITLE } from "../consts";
               </div>
             </div>
             <div class="tool-group">
-              <h3>Infrastructure and deployment</h3>
+              <h3>Deployment</h3>
               <div class="tool-tags">
                 {
-                  ["GitHub", "GitHub Actions", "Railway", "Cloudinary"].map(
+                  ["Vercel", "Railway", "GitHub Actions", "GitHub Pages"].map(
                     (tool) => <span class="tool-tag">{tool}</span>,
                   )
-                }
-              </div>
-            </div>
-            <div class="tool-group">
-              <h3>Currently exploring</h3>
-              <div class="tool-tags">
-                {
-                  ["Next.js", "WordPress", "Web animation"].map((tool) => (
-                    <span class="tool-tag">{tool}</span>
-                  ))
                 }
               </div>
             </div>

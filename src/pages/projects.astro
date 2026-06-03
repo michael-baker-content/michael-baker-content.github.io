@@ -33,6 +33,11 @@ const statusColors = {
     <Header />
     <main>
       <h1 class="page-title">Projects</h1>
+      <p class="page-intro">
+        A portfolio of projects I am working on — web apps, tools, dashboards,
+        and publishing systems. Each entry links to the code and to the writing
+        that explains it.
+      </p>
       <div class="projects-grid">
         {
           projects.map((project) => (
@@ -162,7 +167,7 @@ const statusColors = {
   }
   .project-image {
     width: 100%;
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 4 / 1;
     overflow: hidden;
     background: var(--bg-subtle);
   }

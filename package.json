@@ -12,11 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.3",
-    "@astrojs/react": "^5.0.3",
+    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/react": "^5.0.7",
     "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.7.2",
-    "astro": "^6.1.7",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^6.4.3",
     "katex": "^0.16.45",
     "mafs": "^0.21.0",
     "react": "^18.3.1",

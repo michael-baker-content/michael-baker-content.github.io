@@ -7,9 +7,12 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const posts = (await getCollection("blog")).sort(
+const allPosts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const featuredPost = allPosts.find((p) => p.data.featured);
+const posts = allPosts.filter((p) => !p.data.featured);
 ---
 
 <!doctype html>
@@ -21,45 +24,75 @@ const posts = (await getCollection("blog")).sort(
   <body>
     <Header />
     <main>
-      <div class="search-row">
-        <h1 class="page-title">All posts</h1>
-        <input
-          type="search"
-          id="search"
-          placeholder="Search posts..."
-          autocomplete="off"
-        />
-      </div>
-      <p id="no-results" style="display:none" class="no-results">
-        No posts match your search.
-      </p>
-      <ul class="post-list" id="post-list">
-        {
-          posts.map((post) => (
-            <li
-              class="post-card"
-              data-title={post.data.title.toLowerCase()}
-              data-desc={post.data.description.toLowerCase()}
-              data-tags={(post.data.tags ?? []).join(" ").toLowerCase()}
-            >
-              <div class="post-meta">
-                <FormattedDate date={post.data.pubDate} />
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <div class="tags">
-                    {post.data.tags.map((tag) => (
-                      <span class="tag">{tag}</span>
-                    ))}
-                  </div>
-                )}
+      {
+        featuredPost && (
+          <section class="featured">
+            <div class="featured-canvas" id="featured-canvas" />
+            <div class="featured-content">
+              <h2 class="section-title">Featured Post</h2>
+              <div class="featured-card">
+                <div class="post-meta">
+                  <FormattedDate date={featuredPost.data.pubDate} />
+                  {featuredPost.data.tags &&
+                    featuredPost.data.tags.length > 0 && (
+                      <span class="tag-preview">
+                        {featuredPost.data.tags[0]}
+                      </span>
+                    )}
+                </div>
+                <h3 class="post-title">
+                  <a href={`/blog/${featuredPost.id}/`}>
+                    {featuredPost.data.title}
+                  </a>
+                </h3>
+                <p class="post-desc">{featuredPost.data.description}</p>
               </div>
-              <h2 class="post-title">
-                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-              </h2>
-              <p class="post-desc">{post.data.description}</p>
-            </li>
-          ))
-        }
-      </ul>
+            </div>
+          </section>
+        )
+      }
+
+      <div class="posts-area">
+        <div class="search-row">
+          <h1 class="page-title">All posts</h1>
+          <input
+            type="search"
+            id="search"
+            placeholder="Search posts..."
+            autocomplete="off"
+          />
+        </div>
+        <p id="no-results" style="display:none" class="no-results">
+          No posts match your search.
+        </p>
+        <ul class="post-list" id="post-list">
+          {
+            posts.map((post) => (
+              <li
+                class="post-card"
+                data-title={post.data.title.toLowerCase()}
+                data-desc={post.data.description.toLowerCase()}
+                data-tags={(post.data.tags ?? []).join(" ").toLowerCase()}
+              >
+                <div class="post-meta">
+                  <FormattedDate date={post.data.pubDate} />
+                  {post.data.tags && post.data.tags.length > 0 && (
+                    <div class="tags">
+                      {post.data.tags.map((tag) => (
+                        <span class="tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <h2 class="post-title">
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                </h2>
+                <p class="post-desc">{post.data.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </main>
     <Footer />
   </body>
@@ -94,17 +127,211 @@ const posts = (await getCollection("blog")).sort(
     });
   }
 
+  declare global {
+    interface Window {
+      p5: any;
+    }
+  }
+
+  async function initFeaturedSketch() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.innerWidth < 768) return;
+
+    const container = document.getElementById("featured-canvas");
+    if (!container) return;
+
+    if (!window.p5) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    if ((container as any)._p5instance) {
+      (container as any)._p5instance.remove();
+      (container as any)._p5instance = null;
+    }
+
+    const sketchFn = (p: any) => {
+      let threads: any[] = [];
+
+      function getColors() {
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark" ||
+          (!document.documentElement.getAttribute("data-theme") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        return isDark
+          ? { stroke: [120, 180, 60, 55] }
+          : { stroke: [80, 140, 40, 70] };
+      }
+
+      class Thread {
+        x!: number;
+        y!: number;
+        length!: number;
+        angle!: number;
+        speedX!: number;
+        speedY!: number;
+        noiseOffset!: number;
+        weight!: number;
+
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(randomPos = false) {
+          this.x = p.random(p.width);
+          this.y = randomPos ? p.random(p.height) : p.random(-50, -10);
+          this.length = p.random(100, 250);
+          this.angle = p.random(p.TWO_PI);
+          this.speedX = p.random(-0.2, 0.2);
+          this.speedY = p.random(0.15, 0.4);
+          this.noiseOffset = p.random(1000);
+          this.weight = p.random(1, 2.5);
+        }
+
+        update() {
+          this.x += this.speedX + (p.noise(this.noiseOffset) - 0.5) * 0.4;
+          this.y += this.speedY;
+          this.angle += (p.noise(this.noiseOffset + 500) - 0.5) * 0.02;
+          this.noiseOffset += 0.004;
+          if (this.y > p.height + 100) this.reset();
+        }
+
+        draw(colors: any) {
+          p.push();
+          p.translate(this.x, this.y);
+          p.rotate(this.angle);
+          p.stroke(...colors.stroke);
+          p.strokeWeight(this.weight);
+          p.noFill();
+          p.beginShape();
+          for (let i = 0; i < this.length; i += 5) {
+            const nx = p.noise(this.noiseOffset + i * 0.05) * 8 - 4;
+            p.curveVertex(nx, i - this.length / 2);
+          }
+          p.endShape();
+          p.pop();
+        }
+      }
+
+      p.setup = function () {
+        const cont = p.canvas.parentElement;
+        p.createCanvas(cont.offsetWidth, cont.offsetHeight);
+        for (let i = 0; i < 40; i++) threads.push(new Thread());
+      };
+
+      p.draw = function () {
+        const colors = getColors();
+        p.clear();
+        threads.forEach((t: Thread) => {
+          t.update();
+          t.draw(colors);
+        });
+      };
+
+      p.windowResized = function () {
+        const cont = p.canvas.parentElement;
+        p.resizeCanvas(cont.offsetWidth, cont.offsetHeight);
+      };
+    };
+
+    (container as any)._p5instance = new window.p5(sketchFn, container);
+  }
+
   initSearch();
-  document.addEventListener("astro:after-swap", initSearch);
+  initFeaturedSketch();
+  document.addEventListener("astro:after-swap", () => {
+    initSearch();
+    initFeaturedSketch();
+  });
 </script>
 
 <style>
   main {
+    padding: 0;
+  }
+  .featured {
+    position: relative;
+    background: var(--posts-bg);
+    padding: 2em 1em;
+    overflow: hidden;
+  }
+  .featured-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 1;
+  }
+  .featured-canvas canvas {
+    display: block;
+  }
+  .featured-content {
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 768px) {
+    .featured-canvas {
+      display: none;
+    }
+  }
+  .section-title {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 1.5em;
+    font-family: var(--font-syne);
+  }
+  .featured-card {
+    border: 0.5px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.25em 1.5em;
+    background: var(--bg-surface);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+    cursor: pointer;
+  }
+  .featured-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--box-shadow);
+    border-color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .featured-card .post-title a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.2s ease;
+  }
+  .featured-card:hover .post-title a {
+    color: var(--accent);
+  }
+  .featured-card .post-title a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+  .tag-preview {
+    background: var(--bg-subtle);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.9em;
+  }
+  .posts-area {
     background: var(--posts-bg);
     padding: 3em 1em;
     box-sizing: border-box;
   }
-
   .search-row {
     display: flex;
     align-items: center;

@@ -35,8 +35,12 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
   <body>
     <Header />
     <main>
+      <h1 class="page-title">Tags</h1>
+      <p class="page-intro">
+        Tags cover the tools, concepts, and project types that come up across
+        the writing.
+      </p>
       <div class="search-row">
-        <h1 class="page-title">Tags</h1>
         <input
           type="search"
           id="tag-search"
@@ -176,5 +180,11 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
   .tag-count {
     font-size: 0.75em;
     color: var(--text-muted);
+  }
+  .page-intro {
+    font-size: 0.875em;
+    color: var(--text-muted);
+    margin: 0 0 1.5em;
+    line-height: 1.6;
   }
 </style>

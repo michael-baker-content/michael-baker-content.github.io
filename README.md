@@ -148,19 +148,24 @@ pre > code span { color: var(--shiki-light) !important; }
 npm install remark-math rehype-katex katex
 ```
 
-Add to `astro.config.mjs`:
+Import `unified` from `@astrojs/markdown-remark` and pass the plugins to the processor in `astro.config.mjs`:
 
 ```javascript
+import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    processor: unified({
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
+    }),
 },
 ```
 
-Add to `BaseHead.astro`:
+Note: the older `markdown.remarkPlugins` and `markdown.rehypePlugins` top-level keys are deprecated as of Astro 6.4 and will be removed in Astro 8.0.
+
+Add the KaTeX stylesheet to `BaseHead.astro`:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
