@@ -18,12 +18,12 @@ export interface Project {
 
 export const projects: Project[] = [
 	{
-		slug: 'bay-area-show-explorer',
-		name: 'Show Explorer',
+		slug: 'mikes-list',
+		name: "Mike's List",
 		description: 'A local music discovery tool that treats concert listings as the start of a review workflow rather than a finished product.',
 		overview: `Bay Area Show Explorer started from a familiar local-discovery problem: concert listings are useful, but they are thin. They tell you what is happening, but they often do not explain who the artist is, whether they are local, where to support them, or how trustworthy the imported data is.\n\nThe project became more interesting when I stopped thinking of it as only a calendar and started thinking of it as a review workflow. The app separates artists, venues, and events into different data concerns. A show listing can point to an event, but artist and venue records can carry richer context, source links, enrichment notes, and review states.\n\nInstead of treating imported listings as finished truth, Bay Area Show Explorer treats them as leads. Records can be enriched, reviewed, and kept traceable back to sources. That creates a more careful discovery experience: automated where automation helps, but still honest about uncertainty.\n\nThe hardest challenge has been ambiguity. Artist names collide. Venue data can be incomplete. Search results can look plausible and still be wrong. The app has to make room for unresolved matches rather than pretending every enrichment step is certain.`,
-		repoUrl: 'https://github.com/michael-baker-content/bay-area-music-calendar',
-		liveUrl: 'https://sfcalendar.netlify.app',
+		repoUrl: 'https://github.com/michael-baker-content/mikeslist',
+		liveUrl: 'https://mikeslist.xyz',
 		tags: ['javascript', 'music', 'entertainment', 'data-quality'],
 		status: 'active',
 		type: 'web-app',
@@ -50,12 +50,12 @@ export const projects: Project[] = [
 		image: 'placeholder-2_cjqrms',
 	},
 	{
-		slug: 'baker-university',
-		name: 'Baker University',
+		slug: 'bakerversity',
+		name: 'Bakerversity',
 		description: 'A learning-platform experiment exploring course structure, rich lesson editing, and technical content support with KaTeX and Tiptap.',
 		overview: `Baker University is a learning-platform experiment. It brings together my interest in online education, structured content, rich authoring, and modern frontend development.\n\nThe core question is not just how to display lessons. The question is how to give learning material a usable shape. The project is built with Next.js, React, TypeScript, Tailwind, Tiptap, and KaTeX. Those tools point to the product ambition: Tiptap suggests richer lesson authoring than plain text, KaTeX makes mathematical notation possible, and Next.js provides a foundation that can grow toward course navigation, publishing, or learner progress.\n\nLearning products need both structure and expressiveness. Too little structure and learners get lost. Too much structure and the material becomes rigid. The authoring system has the same tension. It needs enough power to create rich lessons, but not so much complexity that writing a lesson becomes its own obstacle.\n\nMy background in online art education makes this project especially interesting to me. Teaching online is not just uploading content. It is sequencing examples, making critique legible, and helping someone see what matters.`,
-		repoUrl: 'https://github.com/michael-baker-content/bakeruniversity',
-		liveUrl: 'https://bakeruniversity.vercel.app',
+		repoUrl: 'https://github.com/michael-baker-content/bakerversity',
+		liveUrl: 'https://bakerversity.vercel.app',
 		tags: ['nextjs', 'tiptap', 'katex', 'learning-platform', 'typescript'],
 		status: 'active',
 		type: 'web-app',

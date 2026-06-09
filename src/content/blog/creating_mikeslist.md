@@ -1,9 +1,9 @@
 ---
-title: 'Building Show Explorer'
+title: "Creating Mike's List, the SF Bay Area Show Explorer"
 description: 'How I turned thin concert listings into a reviewable music discovery workflow — and what I learned about trust, ambiguity, and data quality along the way.'
-pubDate: '2026-06-02'
-repoUrl: 'https://github.com/michael-baker-content/bay-area-music-calendar'
-# liveUrl: 'https://sfcalendar.netlify.app'
+pubDate: '2026-06-07'
+repoUrl: 'https://github.com/michael-baker-content/mikeslist'
+liveUrl: 'https://mikeslist.xyz'
 tags: ['javascript', 'music', 'entertainment', 'data-quality']
 ---
 
