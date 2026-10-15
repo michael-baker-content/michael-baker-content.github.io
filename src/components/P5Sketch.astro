@@ -6,36 +6,26 @@ interface Props {
 }
 
 const { src, height = 400, caption } = Astro.props;
-const id = `p5-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <figure class="p5-figure">
-  <div class="p5-container" id={id} style={`height: ${height}px`}></div>
+  <div class="p5-container" data-sketch-src={src} style={`height: ${height}px`}></div>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
 
-<script define:vars={{ src, id }}>
-  async function loadSketch() {
-    if (!window.p5) {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src =
-          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
+<script>
+  import { mountSketch } from '../scripts/p5';
+  async function loadSketches() {
+    for (const container of document.querySelectorAll<HTMLElement>('[data-sketch-src]')) {
+      try {
+        const module = await import(/* @vite-ignore */ container.dataset.sketchSrc!);
+        await mountSketch(container, module.default);
+      } catch (error) {
+        console.warn('Sketch unavailable:', error);
+      }
     }
-
-    const container = document.getElementById(id);
-    if (!container) return;
-
-    const module = await import(/* @vite-ignore */ src);
-    const sketchFn = module.default;
-    new p5(sketchFn, container);
   }
-
-  loadSketch();
+  document.addEventListener('astro:page-load', loadSketches);
 </script>
 
 <style>

@@ -12,7 +12,7 @@ const allPosts = (await getCollection("blog")).sort(
 );
 
 const featuredPost = allPosts.find((p) => p.data.featured);
-const posts = allPosts.filter((p) => !p.data.featured);
+const posts = allPosts;
 ---
 
 <!doctype html>
@@ -58,6 +58,7 @@ const posts = allPosts.filter((p) => !p.data.featured);
           <input
             type="search"
             id="search"
+            aria-label="Search posts"
             placeholder="Search posts..."
             autocomplete="off"
           />
@@ -99,6 +100,7 @@ const posts = allPosts.filter((p) => !p.data.featured);
 </html>
 
 <script>
+  import { mountSketch } from "../../scripts/p5";
   function initSearch() {
     const input = document.getElementById("search") as HTMLInputElement;
     const list = document.getElementById("post-list");
@@ -139,22 +141,6 @@ const posts = allPosts.filter((p) => !p.data.featured);
 
     const container = document.getElementById("featured-canvas");
     if (!container) return;
-
-    if (!window.p5) {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src =
-          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
-    if ((container as any)._p5instance) {
-      (container as any)._p5instance.remove();
-      (container as any)._p5instance = null;
-    }
 
     const sketchFn = (p: any) => {
       let threads: any[] = [];
@@ -240,12 +226,10 @@ const posts = allPosts.filter((p) => !p.data.featured);
       };
     };
 
-    (container as any)._p5instance = new window.p5(sketchFn, container);
+    await mountSketch(container, sketchFn);
   }
 
-  initSearch();
-  initFeaturedSketch();
-  document.addEventListener("astro:after-swap", () => {
+  document.addEventListener("astro:page-load", () => {
     initSearch();
     initFeaturedSketch();
   });

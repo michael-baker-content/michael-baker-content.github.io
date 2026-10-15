@@ -2,8 +2,8 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import "../styles/global.css";
-import type { ImageMetadata } from "astro";
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, CLOUDINARY_CLOUD_NAME } from "../consts";
+import 'katex/dist/katex.min.css';
 import { Font } from "astro:assets";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const fallbackImageUrl = `https://res.cloudinary.com/dhsxrn0u7/image/upload/w_1200,f_auto,q_auto/placeholder-1_dsn303`;
+const fallbackImageUrl = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_1200,f_auto,q_auto/placeholder-1_dsn303`;
 
 const { title, description, image } = Astro.props;
 const ogImage = image ? new URL(image.src, Astro.url) : fallbackImageUrl;
@@ -63,9 +63,3 @@ const ogImage = image ? new URL(image.src, Astro.url) : fallbackImageUrl;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
-
-<!-- KaTeX -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-/>

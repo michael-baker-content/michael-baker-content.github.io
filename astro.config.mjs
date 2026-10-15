@@ -7,6 +7,7 @@ import rehypeKatex from 'rehype-katex';
 import { unified } from '@astrojs/markdown-remark';
 
 export default defineConfig({
+    compressHTML: true,
 	site: 'https://michael-baker-content.github.io',
 	integrations: [mdx(), sitemap(), react()],
 	markdown: {

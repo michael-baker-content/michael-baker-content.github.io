@@ -423,6 +423,7 @@ const recentPosts = allPosts
   }
 </style>
 <script>
+  import { mountSketch } from "../scripts/p5";
   declare global {
     interface Window {
       p5: any;
@@ -435,22 +436,6 @@ const recentPosts = allPosts
 
     const container = document.getElementById("hero-canvas");
     if (!container) return;
-
-    if (!window.p5) {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src =
-          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
-    if ((container as any)._p5instance) {
-      (container as any)._p5instance.remove();
-      (container as any)._p5instance = null;
-    }
 
     const sketchFn = (p: any) => {
       let shapes: any[] = [];
@@ -539,7 +524,7 @@ const recentPosts = allPosts
       };
     };
 
-    (container as any)._p5instance = new window.p5(sketchFn, container);
+    await mountSketch(container, sketchFn);
   }
 
   async function initFeaturedSketch() {
@@ -548,22 +533,6 @@ const recentPosts = allPosts
 
     const container = document.getElementById("featured-canvas");
     if (!container) return;
-
-    if (!window.p5) {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src =
-          "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js";
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
-    if ((container as any)._p5instance) {
-      (container as any)._p5instance.remove();
-      (container as any)._p5instance = null;
-    }
 
     const sketchFn = (p: any) => {
       let threads: any[] = [];
@@ -649,12 +618,10 @@ const recentPosts = allPosts
       };
     };
 
-    (container as any)._p5instance = new window.p5(sketchFn, container);
+    await mountSketch(container, sketchFn);
   }
 
-  initHeroSketch();
-  initFeaturedSketch();
-  document.addEventListener("astro:after-swap", () => {
+  document.addEventListener("astro:page-load", () => {
     initHeroSketch();
     initFeaturedSketch();
   });

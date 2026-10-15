@@ -44,6 +44,7 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
         <input
           type="search"
           id="tag-search"
+          aria-label="Filter tags"
           placeholder="Filter tags..."
           autocomplete="off"
         />
@@ -93,8 +94,7 @@ const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
     });
   }
 
-  initTagSearch();
-  document.addEventListener("astro:after-swap", initTagSearch);
+  document.addEventListener("astro:page-load", initTagSearch);
 </script>
 
 <style>

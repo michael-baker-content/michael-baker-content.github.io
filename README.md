@@ -22,83 +22,36 @@ Posts go in depth on projects from the companion [GitHub profile](https://github
 
 ## Basic setup
 
-Requires Node.js 22+. The repo is named `yourusername.github.io` for GitHub Pages root URL hosting.
+Requires Node.js 22.22.0 or newer. The repo is named `yourusername.github.io` for GitHub Pages root URL hosting.
 
-### Scaffold
+### Local development
 
-Since the Astro blog template scaffolder won't write into a non-empty directory (the cloned repo has a README and `.gitignore`), scaffold into a temp folder and move the files up:
+This repository already contains the application; no scaffolding is needed.
 
-```bash
-npm create astro@latest temp-astro -- --template blog
-Move-Item temp-astro\* . -Force
-Move-Item temp-astro\.* . -Force
-Remove-Item temp-astro
+```powershell
+npm ci
+npm run dev
 ```
 
-### Install and configure
+Open the local URL printed by Astro (normally http://localhost:4321).
 
-```bash
-npm install @astrojs/mdx
+```powershell
+npm run build
+npm run preview
 ```
 
-`astro.config.mjs`:
+Cloudinary defaults to the site's existing public account. To override it, copy
+`.env.example` to `.env` and change `PUBLIC_CLOUDINARY_CLOUD_NAME`.
+The cloud name is public, not an API credential.
 
-```javascript
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
+### Deployment and checks
 
-export default defineConfig({
-    site: 'https://yourusername.github.io',
-    integrations: [mdx(), sitemap()],
-});
-```
+Pushes to `main` deploy through `.github/workflows/deploy.yml`.
+GitHub Pages must use **GitHub Actions** as its source. Pull requests run a
+separate build check and do not deploy. The optional Cloudinary repository
+secret overrides the default account during deployment.
 
-### Deploy
-
-In the repo on GitHub, set **Settings → Pages → Source** to **GitHub Actions**, then add `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v4
-```
+Generated `.astro/`, `dist/`, and `node_modules/` files are not tracked.
 
 ### Post frontmatter
 
@@ -145,7 +98,7 @@ pre > code span { color: var(--shiki-light) !important; }
 ### KaTeX math rendering
 
 ```bash
-npm install remark-math rehype-katex katex
+npm install @astrojs/markdown-remark remark-math rehype-katex katex
 ```
 
 Import `unified` from `@astrojs/markdown-remark` and pass the plugins to the processor in `astro.config.mjs`:
@@ -165,7 +118,7 @@ markdown: {
 
 Note: the older `markdown.remarkPlugins` and `markdown.rehypePlugins` top-level keys are deprecated as of Astro 6.4 and will be removed in Astro 8.0.
 
-Add the KaTeX stylesheet to `BaseHead.astro`:
+The KaTeX stylesheet is bundled from the installed package in `BaseHead.astro`:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
@@ -253,3 +206,14 @@ Featured projects appear on the homepage. `blogPosts` contains post IDs that ren
 ## License
 
 MIT
+
+## Maintenance notes
+
+Astro 7 uses the explicit unified Markdown processor to preserve remark/rehype
+math rendering, and `compressHTML: true` preserves the earlier whitespace behavior.
+
+As of 2026-10-15, npm audit reports five low-severity entries in the KaTeX
+dependency chain (GHSA-238p-pmpm-9mq7), with no moderate, high, or critical entries.
+The remaining fix requires updates beyond the math libraries' declared KaTeX
+ranges. Do not use `npm audit fix --force`: its proposed downgrades would remove
+existing math-library functionality. Recheck when compatible releases are available.
