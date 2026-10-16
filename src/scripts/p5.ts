@@ -1,3 +1,4 @@
+declare global { interface Window { p5: any; } }
 let loading: Promise<void> | undefined;
 const instances = new Map<HTMLElement, { remove(): void }>();
 const pending = new WeakSet<HTMLElement>();

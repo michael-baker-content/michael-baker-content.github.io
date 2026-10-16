@@ -1,0 +1,26 @@
+---
+interface Props { name: string; image?: string; slug: string; }
+import CloudinaryImage from './CloudinaryImage.astro';
+const { name, image, slug } = Astro.props;
+const hasImage = image && !image.startsWith('placeholder-');
+const treatment = slug === 'sketchlet' ? 'drawing' : slug === 'mikes-list' ? 'sound' : 'system';
+---
+{hasImage ? <div class="actual"><CloudinaryImage publicId={image!} alt={name === 'Baker Parks' ? 'A view of Bayview Park, San Francisco' : name} width={1000} height={625} bare /></div> :
+<div class:list={['placeholder',treatment]} role="img" aria-label={`${name}: image placeholder, project screenshot to come`}>
+  <span class="corners" aria-hidden="true">+</span>
+  <div class="shapes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <span class="media-name">{name}</span>
+  <span class="media-note">IMAGE STUDY / SCREENSHOT TO COME</span>
+</div>}
+<style>
+.actual,.placeholder { width:100%; height:100%; min-height:180px; aspect-ratio:16/10; overflow:hidden; }
+.placeholder { position:relative; background:#d6c9f2; color:#252039; display:flex; flex-direction:column; justify-content:flex-end; padding:24px; background-image:radial-gradient(#25203926 .7px,transparent .7px); background-size:7px 7px; }
+.system { background-color:#c4d0ed; }.sound { background-color:#ff946d; }
+.corners { position:absolute; top:10px; left:18px; font:22px monospace; }
+.shapes { position:absolute; inset:15% 12% 30%; display:flex; align-items:center; justify-content:center; gap:10px; transform:rotate(-12deg); }
+i { display:block; width:15%; height:90%; border:2px solid currentColor; border-radius:80px; background:#ffffff30; }
+i:nth-child(2n) { height:50%; background:currentColor; }i:nth-child(3) { height:110%; }
+.drawing i { border-radius:45% 55% 30% 70%; transform:rotate(25deg); }
+.media-name { position:relative; font:700 clamp(24px,3vw,38px)/1.1 var(--font-syne); letter-spacing:-.05em; }
+.media-note { margin-top:10px; font:9px/1.5 var(--font-mono); letter-spacing:.08em; }
+</style>

@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import BaseHead from "../components/BaseHead.astro";
-import CloudinaryImage from "../components/CloudinaryImage.astro";
+import ProjectMedia from "../components/ProjectMedia.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE } from "../consts";
@@ -31,7 +31,8 @@ const statusColors = {
   </head>
   <body>
     <Header />
-    <main>
+    <main id="main-content">
+      <p class="eyebrow">THE WORK / EXPERIMENTS & WORKING PROTOTYPES</p>
       <h1 class="page-title">Projects</h1>
       <p class="page-intro">
         A portfolio of projects I am working on — web apps, tools, dashboards,
@@ -40,22 +41,10 @@ const statusColors = {
       </p>
       <div class="projects-grid">
         {
-          projects.map((project) => (
+          [...projects].sort((a,b) => (['sketchlet','baker-parks'].includes(b.slug) ? 1 : 0) - (['sketchlet','baker-parks'].includes(a.slug) ? 1 : 0)).map((project) => (
             <div class="project-card">
               <div class="project-image">
-                {project.image ? (
-                  <CloudinaryImage
-                    publicId={project.image}
-                    alt={project.name}
-                    width={600}
-                    height={300}
-                    bare={true}
-                  />
-                ) : (
-                  <div class="placeholder-image">
-                    <span>{project.name[0]}</span>
-                  </div>
-                )}
+                <ProjectMedia {...project} />
               </div>
               <div class="project-body">
                 <div class="project-header">
@@ -129,7 +118,7 @@ const statusColors = {
 <style>
   main {
     background: var(--projects-bg);
-    padding: 3em 1em;
+    padding: 64px 0 90px;
     box-sizing: border-box;
   }
   .page-title {

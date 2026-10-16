@@ -1,0 +1,36 @@
+<figure class="signal" aria-label="Animated geometric study: blue ellipses intersect an orange circle">
+  <div class="signal-top"><span>FIG. 01 / IN GOOD COMPANY</span><span aria-hidden="true">↗</span></div>
+  <div class="composition" aria-hidden="true"><div class="sun"></div><div class="orbit">{Array.from({length:12},(_,i)=><i style={`--i:${i}`}></i>)}</div><div class="axis"></div></div>
+  <figcaption><span>Different interests.<br />Interesting intersections.</span><button type="button" aria-pressed="false" aria-label="Pause animation">Pause ↔</button></figcaption>
+</figure>
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.signal').forEach(figure => {
+      const button = figure.querySelector('button')!;
+      if (button.dataset.ready) return;
+      button.dataset.ready = 'true';
+      button.addEventListener('click', () => {
+        const paused = figure.classList.toggle('paused');
+        button.setAttribute('aria-pressed', String(paused));
+        button.setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation');
+        button.textContent = paused ? 'Play ↔' : 'Pause ↔';
+      });
+    });
+  });
+</script>
+<style>
+.signal { margin:0; min-width:0; position:relative; background:#242b57; color:#f5f0e5; border:1px solid #ffffff18; aspect-ratio:1.05; display:flex; flex-direction:column; overflow:hidden; background-image:radial-gradient(#e3e9ff28 .6px,transparent .6px); background-size:5px 5px; }
+.signal-top,figcaption { display:flex; justify-content:space-between; align-items:center; padding:22px; font:10px/1.6 var(--font-mono); letter-spacing:.04em; z-index:1; }
+.composition { flex:1; position:relative; min-height:220px; }
+.sun { position:absolute; width:44%; aspect-ratio:1; border-radius:50%; background:#ff805b; top:14%; left:43%; box-shadow:inset -25px -10px 45px #bc3a371a; animation:drift 12s ease-in-out infinite alternate; }
+.orbit { position:absolute; inset:5% 10%; transform:rotate(-30deg); animation:turn 18s ease-in-out infinite alternate; }
+.orbit i { position:absolute; inset:calc(var(--i)*2%) calc(var(--i)*1.2%); border:1px solid #b8c6ff; border-radius:50%; transform:rotate(calc(var(--i)*9deg)); }
+.axis { position:absolute; top:50%; left:6%; right:6%; height:1px; background:#c7d0ff55; transform:rotate(-30deg); }
+figcaption { margin-top:auto; border-top:1px solid #ffffff25; }
+button { background:transparent; border:1px solid #ffffff55; color:inherit; padding:7px 10px; font:10px var(--font-mono); border-radius:2px; }
+.paused * { animation-play-state:paused!important; }
+@keyframes drift { to { transform:translate(-30%,25%) scale(.88); } }
+@keyframes turn { to { transform:rotate(25deg) scale(.85); } }
+@media(prefers-reduced-motion:reduce) { button { display:none; } }
+@media(max-width:640px) { .signal { aspect-ratio:auto; min-height:360px; } .composition { min-height:180px; } }
+</style>

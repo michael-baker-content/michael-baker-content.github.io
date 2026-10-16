@@ -34,9 +34,9 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
       }
       .prose {
         width: 100%;
-        max-width: 100%;
+        max-width: 740px;
         margin: auto;
-        padding: 1em 2em;
+        padding: 1em 0;
         color: var(--text);
         box-sizing: border-box;
         word-break: break-word;
@@ -44,7 +44,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
       .title {
         margin-bottom: 1em;
         padding: 1em 0;
-        text-align: center;
+        text-align: left;
         line-height: 1;
         max-width: 100%;
         box-sizing: border-box;
@@ -63,7 +63,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         display: flex;
         flex-wrap: wrap;
         gap: 0.5em;
-        justify-content: center;
+        justify-content: flex-start;
         margin: 0.75em 0;
         max-width: 100%;
       }
@@ -106,12 +106,20 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
         color: var(--accent);
         border: 1px solid var(--accent);
       }
+      .title h1 { font-size:clamp(2.3rem,5vw,3.5rem); margin:22px 0; }
+      .article-deck { font-size:1.2rem; line-height:1.6; color:var(--text-muted); }
+      .date { font:11px var(--font-mono); }
+      .repo-button { background:transparent; color:var(--accent); padding:10px 0; border:0; font:12px var(--font-mono); }
+      .repo-button:hover { border:0; background:transparent; text-decoration:underline; }
+      .prose :global(h2) { font-size:1.9rem; margin-top:2em; }
+      .prose :global(h3) { font-size:1.4rem; margin-top:1.6em; }
+      .prose :global(p) { margin-bottom:1.4em; }
     </style>
   </head>
 
   <body>
     <Header />
-    <main>
+    <main id="main-content">
       <article>
         <div class="hero-image">
           {
@@ -132,7 +140,9 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
                 )
               }
             </div>
+            <p class="eyebrow">FIELD NOTES / MICHAEL BAKER</p>
             <h1>{title}</h1>
+            <p class="article-deck">{description}</p>
             {
               tags && tags.length > 0 && (
                 <div class="tags">
@@ -152,7 +162,7 @@ const { title, description, pubDate, updatedDate, heroImage, repoUrl, tags } =
                   rel="noopener noreferrer"
                   class="repo-button"
                 >
-                  View Repository on GitHub
+                  Explore the repository ↗
                 </a>
               )
             }
