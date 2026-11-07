@@ -53,6 +53,18 @@ secret overrides the default account during deployment.
 
 Generated `.astro/`, `dist/`, and `node_modules/` files are not tracked.
 
+### Project storytelling workflow
+
+Use the portable [project-story skill](.agents/skills/project-story/SKILL.md) for evidence-based overviews, initial posts, follow-ups, and historical edits. It includes an interview guide, templates, portfolio conventions, a handoff format and review checklist.
+
+The workflow also supports a subsequent update to the professional [portfolio](https://michaelbaker.vercel.app/) in `michael-portfolio`: case studies, project cards, evidence highlights and a homepage placement proposal. It calls for a fuller interview before content generation and reconciles repository defaults with saved dashboard content, since both editing routes are in use. Homepage promotion is a discussion point, not automatic.
+
+In this repository, ask: “Use $project-story to document PROJECT. Inspect the evidence before interviewing me, and prepare drafts for review.” If your tool does not discover repository skills, explicitly ask it to read `.agents/skills/project-story/SKILL.md`.
+
+From another project, copy the **whole** `.agents/skills/project-story/` folder into that repository's `.agents/skills/` folder, or install that folder once in your personal Codex skills directory. Then ask: “Use $project-story for this project. The portfolio checkout is at PATH (or unavailable). Prepare a portfolio handoff; do not publish.” Keep the portable folder together so its relative references resolve. This portfolio's copy is the maintained workflow source; refresh portable copies when conventions change.
+
+Drafts belong in `portfolio-handoff/<project-slug>/`, outside `src/content/blog/`. This site has no draft filter; all blog content files are publication inputs. Project overviews live in `src/data/projects.ts`, not a project Markdown collection. Review content before authorizing import or publication. See the skill's handoff guide for validation and transfer steps.
+
 ### Post frontmatter
 
 ```markdown
