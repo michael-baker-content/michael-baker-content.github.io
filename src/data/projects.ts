@@ -52,8 +52,8 @@ export const projects: Project[] = [
 	{
 		slug: 'bakerversity',
 		name: 'Bakerversity',
-		description: 'A learning-platform experiment exploring course structure, rich lesson editing, and technical content support with KaTeX and Tiptap.',
-		overview: `Baker University is a learning-platform experiment. It brings together my interest in online education, structured content, rich authoring, and modern frontend development.\n\nThe core question is not just how to display lessons. The question is how to give learning material a usable shape. The project is built with Next.js, React, TypeScript, Tailwind, Tiptap, and KaTeX. Those tools point to the product ambition: Tiptap suggests richer lesson authoring than plain text, KaTeX makes mathematical notation possible, and Next.js provides a foundation that can grow toward course navigation, publishing, or learner progress.\n\nLearning products need both structure and expressiveness. Too little structure and learners get lost. Too much structure and the material becomes rigid. The authoring system has the same tension. It needs enough power to create rich lessons, but not so much complexity that writing a lesson becomes its own obstacle.\n\nMy background in online art education makes this project especially interesting to me. Teaching online is not just uploading content. It is sequencing examples, making critique legible, and helping someone see what matters.`,
+		description: 'An LMS prototype for technical courses, with rich lesson authoring, course management, and learner assessments.',
+		overview: "Bakerversity is my learning management system and a working prototype for creating technical courses. Instructors can organize lessons, course pages, quizzes, and exams into modules. Public lessons are free to read without an account; signed-in learners can take assessments and view course progress in their profiles.\n\nThe authoring interface combines a Tiptap editor with reusable course assets, separate drafts and publications, revision history, and recovery downloads. Technical explanations can include code, mathematics, directory trees, callouts, images, and practice questions. Instructors manage their own courses; platform administrators have broader access and additional site-wide tools.\n\nPractical Localization Engineering gives me a complete course to work with as both the platform’s developer and an instructor adapting material. I worked with Gemini on the course structure and generated material, then used that material to develop the presentation and editing workflows. Codex handles much of the implementation in collaboration with me; my focus is product direction, content management, adaptation, and testing.\n\nThe project is in active development alongside my other prototypes. All planned course pages contain material, including quizzes and exams, but adaptation and review continue. For now, the course demonstrates what the platform can do. I have checked content and formatting during authoring, but have not yet completed a learner walkthrough or tested it with other people.",
 		repoUrl: 'https://github.com/michael-baker-content/bakerversity',
 		liveUrl: 'https://bakerversity.vercel.app',
 		tags: ['nextjs', 'tiptap', 'katex', 'learning-platform', 'typescript'],
@@ -61,8 +61,9 @@ export const projects: Project[] = [
 		type: 'web-app',
 		learningFocus: 'Learning system design, rich content authoring, and course structure',
 		startDate: '2025-04',
+		lastUpdated: '2026-11-07',
 		featured: true,
-		blogPosts: ['baker-university'],
+		blogPosts: ['building-bakerversity', 'returning-to-bakerversity'],
 		image: 'placeholder-4_rdttsz',
 	},
 	{

@@ -2,8 +2,7 @@
 title: 'Building Baker University'
 description: 'A learning-platform experiment exploring course structure, rich lesson editing, and technical content support — and what online art education taught me about building for attention.'
 pubDate: '2026-06-05'
-repoUrl: 'https://github.com/michael-baker-content/bakeruniversity'
-liveUrl: 'https://bakeruniversity.vercel.app'
+repoUrl: 'https://github.com/michael-baker-content/bakerversity'
 tags: ['nextjs', 'tiptap', 'katex', 'learning-platform', 'typescript']
 ---
 
@@ -37,32 +36,6 @@ The challenge for Baker University is deciding what kind of learning platform it
 
 For now, the value of the project is that it gives me a place to explore the relationship between content structure and interface design. Learning products are never just content. They are systems for attention.
 
-Bakerversity is a learning-platform experiment. It brings together my interest in online education, structured content, rich authoring, and modern frontend development.
+*Update, November 2026: Baker University is now called Bakerversity. This post preserves the earlier project framing. See [the authoring-workflow follow-up](/blog/returning-to-bakerversity/) and [current project overview](/projects/bakerversity/) for the later state.*
 
-The core question is not just how to display lessons. The question is how to give learning material a usable shape.
-
-## How It Works
-
-The project is built with Next.js, React, TypeScript, Tailwind, Tiptap, and KaTeX.
-
-Those tools point to the product ambition. Tiptap suggests richer lesson authoring than plain text. KaTeX makes mathematical notation possible. Next.js and TypeScript provide a foundation that can grow toward course navigation, publishing, or learner progress.
-
-The platform is still an experiment, but the shape is clear: courses, lessons, editable content, and technical explanation need to live together.
-
-## Interesting Challenge
-
-Learning products need both structure and expressiveness.
-
-Too little structure and learners get lost. Too much structure and the material becomes rigid. The authoring system has the same tension. It needs enough power to create rich lessons, but not so much complexity that writing a lesson becomes its own obstacle.
-
-My background in online art education makes this project especially interesting to me. Teaching online is not just uploading content. It is sequencing examples, making critique legible, and helping someone see what matters.
-
-## How It Fits The Larger Project
-
-Bakerversity connects my content experience to my development work. It is a product prototype, but it is also a way to explore how learning systems behave as content systems: structured, authored, navigable, and designed around attention.
-
-## Questions To Confirm
-
-- What is the first real course or lesson this platform should demonstrate?
-- Is the next milestone learner progress, authoring workflow, or public course publishing?
-- How much of the online art education background should be foregrounded in the case study?
+[Visit Bakerversity](https://bakerversity.vercel.app).
